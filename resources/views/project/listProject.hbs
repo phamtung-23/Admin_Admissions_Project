@@ -1,0 +1,122 @@
+
+    <!-- End Navbar -->
+    <div class="container-fluid py-4">
+      <div class="row">
+        <div class="col-12">
+          <div class="card mb-4">
+            <div class="card-header pb-0">
+              <div class="row">
+                <div class="col-6 d-flex align-items-center">
+                  <h6 class="mb-0">Project Management</h6>
+                </div>
+                <div class="col-6 text-end">
+                  <a class="btn bg-gradient-dark mb-0" href="project/create"><i class="fas fa-plus"></i>&nbsp;&nbsp;Add
+                    New Project</a>
+                </div>
+              </div>
+            </div>
+            <div class="card-body px-0 pt-0 pb-2">
+              <div class="table-responsive p-0">
+                <table class="table align-items-center mb-0">
+                  <thead>
+                    <tr>
+                      <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Name</th>
+                      <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                        Icon</th>
+                      <th class="text-center text-secondary text-xxs font-weight-bolder opacity-7">Lat/long
+                      </th>
+                      <th class="text-secondary opacity-7" colspan='5'></th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {{#each projects}}
+                    <tr>
+                      <td>
+                        <div class="d-flex px-2 py-1">
+                          <div class="d-flex flex-column justify-content-center">
+                            <h6 class="mb-0 text-sm">{{this.name.vi}}</h6>
+                            <p class="text-xs text-secondary mb-0">{{this.name.en}}</p>
+                          </div>
+                        </div>
+                      </td>
+                      <td class="align-middle text-center">
+                        <img width="50px" height="50px" src="{{this.icon.imageUrl}}" alt="image error">
+                      </td>
+                      <td class="align-middle text-center">
+                        <span class="text-secondary text-xs font-weight-bold">[{{this.latLong}}]</span>
+                      </td>
+                      <td class="align-middle text-center" style="width: 150px !important;">
+                        <a href="/project/{{this._id}}/edit" class="text-secondary font-weight-bold text-xs">
+                          Edit
+                        </a>
+                      </td>
+                      <td class="align-middle text-center" style="width: 150px !important;">
+                        <a href="javascript:;" class="text-secondary font-weight-bold text-xs" id="deleteUser"
+                          data-toggle="tooltip" data-original-title="Edit user"
+                          onclick="deleteProject('{{this._id}}','{{this.name.vi}}')">
+                          Delete
+                        </a>
+                      </td>
+                    </tr>
+                    {{/each}}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  
+  
+  <script>
+    function deleteProject(id, name) {
+      Swal.fire({
+        text: `Are you sure you want to delete Project with name "${name}" ?`,
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        confirmButtonText: "Yes",
+        cancelButtonText: "Cancel",
+        reverseButtons: true
+      }).then((result) => {
+        if (result.isConfirmed) {
+          fetch(`/project/${id}`, {
+            method: 'DELETE',
+            headers: { 'Content-Type': 'application/json' },
+          }).then((res) => {
+            const response = {
+              status: res.status,
+              data: res.json(),
+            }
+            return response
+          })
+            .then(data => {
+              data.data.then((val) => {
+                if (data.status != 200) {
+                  Swal.fire({
+                    position: 'center',
+                    icon: 'error',
+                    text: val.message,
+                    showConfirmButton: false,
+                    timer: 1500
+                  })
+                } else {
+                  Swal.fire({
+                    position: "center",
+                    icon: "success",
+                    text: val.message,
+                    showConfirmButton: false,
+                    timer: 1500
+                  }).then(() => {
+                    window.location.href = "/project"
+                  });
+                }
+              })
+            })
+        }
+      });
+    }
+
+
+  </script>

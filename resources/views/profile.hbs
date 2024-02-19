@@ -1,0 +1,202 @@
+
+  <!-- End Navbar -->
+  <div class="container-fluid">
+    <div class="page-header min-height-300 border-radius-xl mt-4" style="background-image: url('../assets/img/curved-images/curved0.jpg'); background-position-y: 50%;">
+      <span class="mask bg-gradient-primary opacity-6"></span>
+    </div>
+    <div class="card card-body blur shadow-blur mx-4 mt-n6 overflow-hidden">
+      <div class="row gx-4">
+        <div class="col-auto">
+          <div class="avatar avatar-xl position-relative">
+            <img src="../assets/img/PTSC/icon-user.png" alt="profile_image" class="w-100 border-radius-lg shadow-sm">
+          </div>
+        </div>
+        <div class="col-auto my-auto">
+          <div class="h-100">
+            <h5 class="mb-1">
+              {{user.username}}
+            </h5>
+            <p class="mb-0 font-weight-bold text-sm">
+              {{#if user.isManager}}
+                Content Management
+                  {{#if user.isAdmin}}
+                    / System Administrator
+                {{/if}}
+              {{else}}
+                System Administrator
+              {{/if}}
+              
+            </p>
+          </div>
+        </div>
+        
+      </div>
+    </div>
+  </div>
+  <div class="container-fluid pt-4">
+    <div class="row">
+      <div class="col-12 col-xl-12">
+        <div class="card h-100">
+          <div class="card-header pb-0 p-3">
+            <div class="row">
+              <div class="col-md-8 d-flex align-items-center">
+                <h6 class="mb-0">Personal information</h6>
+              </div>
+              <div class="col-md-4 text-end">
+                <button id="btnChangeProfile" class="btn bg-gradient-dark mb-0"><i class="fas fa-lock"></i>&nbsp;&nbsp; Change password</button>
+              </div>
+            </div>
+          </div>
+          <div class="card-body p-3">
+            {{!-- <p class="text-sm">
+              Hi, I’m Alec Thompson, Decisions: If you can’t decide, the answer is no. If two equally difficult paths, choose the one more painful in the short term (pain avoidance is creating an illusion of equality).
+            </p> --}}
+            {{!-- <hr class="horizontal gray-light my-4"> --}}
+            <ul class="list-group">
+              <li class="list-group-item border-0 ps-0 pt-0 text-sm"><strong class="text-dark">Full name:</strong> &nbsp; {{user.fullname}}</li>
+              <li class="list-group-item border-0 ps-0 text-sm"><strong class="text-dark">Email:</strong> &nbsp; {{user.email}}</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="container-fluid py-4" style="display: none;" id="block-form-change-profile">
+    <div class="row">
+      <div class="col-12">
+        <div class="card mb-4">
+          <div class="card-header pb-0">
+            <div class="row">
+              <div class="col-6 d-flex align-items-center">
+                <h6 class="mb-0">Edit personal information</h6>
+              </div>
+            </div>
+          </div>
+          <div class="card-body px-0 pt-0 pb-2">
+            <div class="card card-plain mt-2">
+              {{!-- <div class="card-header pb-0 text-left bg-transparent"> --}}
+                {{!-- <h3 class="font-weight-bolder text-info text-gradient">Thông tin tài khoản mới</h3> --}}
+                {{!-- <p class="mb-0">Vui lòng điền đầy đủ thông tin bên dưới!</p> --}}
+              {{!-- </div> --}}
+              <div class="card-body">
+                <form role="form" onsubmit="return false;" id="formChangeProfile">
+                  <div class="row">
+                    <div class="col-xl-6 col-lg-6 col-md-6">
+                      {{#if user.isManager }}
+                        {{#if (compare user.isAdmin false)}}
+                          <label>Enter current password</label>
+                          <div class="mb-3">
+                            <input name="newPassword" type="currentPassword" class="form-control" placeholder="Old Password"
+                            id="currentPasswordProfile">
+                          </div>
+                        {{/if}}
+                      {{/if}}
+                      <label>Enter new password</label>
+                      <div class="mb-3">
+                        <input name="newPassword" type="password" class="form-control" placeholder="New Password"
+                          id="newPasswordProfile">
+                      </div>
+                    </div>
+                    <div class="col-xl-6 col-lg-6 col-md-6">
+                      <label>Email</label>
+                      <div class="mb-3">
+                        <input name="email" type="email" class="form-control" placeholder="abc@gmail.com" value="{{user.email}}"
+                          id="emailProfile">
+                      </div>
+                      <label>Full name</label>
+                      <div class="mb-3">
+                        <input name="fullname" type="text" class="form-control" placeholder="Tên đầy đủ" value="{{user.fullname}}"
+                          id="fullnameProfile">
+                      </div>
+                    </div>
+                  </div>
+                  <div class="text-center">
+                    <button type="submit" class="btn bg-gradient-dark mt-4 mb-0">Update</button>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script>
+
+    const btnChangeProfile = document.getElementById("btnChangeProfile")
+    // click button to show form and focus in this form
+    btnChangeProfile.addEventListener('click', () => {
+      const blockFormChangeProfile = document.getElementById("block-form-change-profile")
+      blockFormChangeProfile.style.display = "block"
+      const newPasswordEdit = document.getElementById("newPasswordProfile")
+      newPasswordEdit.focus()
+    })
+
+    //xử li form thay thay đổi profile
+    let formChangeProfile = document.getElementById('formChangeProfile')
+
+    let currentPasswordProfile = document.getElementById('currentPasswordProfile')
+    let newPasswordProfile = document.getElementById('newPasswordProfile')
+    let emailProfile = document.getElementById('emailProfile')
+    let fullnameProfile = document.getElementById('fullnameProfile')
+    let profileData
+
+    formChangeProfile.addEventListener('submit', () => {
+      if(currentPasswordProfile){
+        profileData = {
+          currentPassword: currentPasswordProfile.value,
+          newPassword: newPasswordProfile.value,
+          email: emailProfile.value,
+          fullname: fullnameProfile.value,
+        }
+      }
+      else if(newPasswordProfile.value){
+        profileData = {
+          newPassword: newPasswordProfile.value,
+          email: emailProfile.value,
+          fullname: fullnameProfile.value,
+        }
+      }else{
+        profileData = {
+          email: emailProfile.value,
+          fullname: fullnameProfile.value,
+        }
+      }
+      console.log(profileData)
+      fetch('/profile/{{user._id}}', {
+        method: 'PUT',
+        body: JSON.stringify(profileData),
+        headers: { 'Content-Type': 'application/json' },
+      }).then((res) => {
+        const response = {
+          status: res.status,
+          data: res.json(),
+        }
+        return response
+      })
+        .then(data => {
+          data.data.then((val) => {
+            if (data.status != 200) {
+              Swal.fire({
+                position: 'center',
+                icon: 'error',
+                text: val.message,
+                showConfirmButton: false,
+                timer: 1500
+              })
+            } else {
+              Swal.fire({
+                position: "center",
+                icon: "success",
+                text: "Cập nhật tài khoản thành công!",
+                showConfirmButton: false,
+                timer: 1500
+              }).then(() => {
+                window.location.href = "/profile"
+              });
+            }
+          })
+        })
+    })
+
+  </script>

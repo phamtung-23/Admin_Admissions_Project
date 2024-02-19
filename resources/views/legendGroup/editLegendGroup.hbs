@@ -1,0 +1,99 @@
+<!-- End Navbar -->
+<div class="container-fluid py-4">
+  <div class="row">
+    <div class="col-12">
+      <div class="card mb-4">
+        <div class="card-header pb-0">
+          <div class="row">
+            <div class="col-6 d-flex align-items-center">
+              <h6 class="mb-0">New Legend Group Management</h6>
+            </div>
+            <div class="col-6 text-end">
+              <a class="btn mb-0" href="/legend-group"><i class="fas fa-caret-square-left"></i>&nbsp;&nbsp;Go back</a>
+            </div>
+          </div>
+        </div>
+        <div class="card-body px-0 pt-0 pb-2">
+          <div class="card card-plain mt-2">
+            <div class="card-header pb-0 text-left bg-transparent">
+              {{!-- <h3 class="font-weight-bolder text-info text-gradient">Thông tin tài khoản mới</h3> --}}
+              <p class="mb-0">Please fill in all the required information below!</p>
+              <p class="mb-0 text-danger">{{message}}</p>
+            </div>
+            <div class="card-body">
+              <form role="form" id="formEditLegendGroup" onsubmit="return false;">
+                <div class="row">
+                  <div class="col-xl-6 col-lg-6 col-md-6">
+                    <label>Vietnamese Name Legend Group</label>
+                    <div class="mb-3">
+                      <input name="nameVi" type="text" class="form-control" placeholder="Vietnamese name Legend Group" value="{{legendGroup.name.vi}}" id="nameViCreate">
+                    </div>
+                  </div>
+                  <div class="col-xl-6 col-lg-6 col-md-6">
+                    <label>English Name Legend Group</label>
+                    <div class="mb-3">
+                      <input name="nameEn" type="text" class="form-control" placeholder="English name Legend Group" value="{{legendGroup.name.en}}" id="nameEnCreate">
+                    </div>
+                  </div>
+                </div>
+                <div class="text-center">
+                  <button type="submit" class="btn bg-gradient-dark mt-4 mb-0">Update Legend Group</button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  const formEditLegendGroup = document.getElementById('formEditLegendGroup');
+  const nameViCreate = document.getElementById('nameViCreate');
+  const nameEnCreate = document.getElementById('nameEnCreate');
+  const message = document.getElementById('message');
+
+  formEditLegendGroup.addEventListener('submit', (e) => {
+    const formData = {
+      nameVi: nameViCreate.value,
+      nameEn: nameEnCreate.value,
+    }
+
+
+    fetch('/legend-group/{{legendGroup._id}}', {
+      method: 'PUT',
+      body: JSON.stringify(formData),
+      headers: { 'Content-Type': 'application/json' },
+    }).then((res) => {
+      const response = {
+        status: res.status,
+        data: res.json(),
+      }
+      return response
+    })
+      .then(data => {
+        data.data.then((val) => {
+          if (data.status != 200) {
+            Swal.fire({
+              position: 'center',
+              icon: 'error',
+              text: val.message,
+              showConfirmButton: false,
+              timer: 1500
+            })
+          } else {
+            Swal.fire({
+              position: "center",
+              icon: "success",
+              text: val.message,
+              showConfirmButton: false,
+              timer: 1500
+            }).then(() => {
+              window.location.href = "/legend-group"
+            });
+          }
+        })
+      })
+  })
+</script>

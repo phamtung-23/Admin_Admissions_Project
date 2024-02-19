@@ -1,0 +1,156 @@
+
+    <!-- End Navbar -->
+    <div class="container-fluid py-4">
+      <div class="row">
+        <div class="col-12">
+          <div class="card mb-4">
+            <div class="card-header pb-0">
+              <div class="row">
+                <div class="col-6 d-flex align-items-center">
+                  <h6 class="mb-0">Create a new account</h6>
+                </div>
+                <div class="col-6 text-end">
+                  <a class="btn mb-0" href="/users"><i class="fas fa-caret-square-left"></i>&nbsp;&nbsp;Go back</a>
+                </div>
+              </div>
+            </div>
+            <div class="card-body px-0 pt-0 pb-2">
+              <div class="card card-plain mt-2">
+                <div class="card-header pb-0 text-left bg-transparent">
+                  {{!-- <h3 class="font-weight-bolder text-info text-gradient">Thông tin tài khoản mới</h3> --}}
+                  <p class="mb-0">Please fill in all the required information below!</p>
+                </div>
+                <div class="card-body">
+                  <form role="form" onsubmit="return false;" id="formCreateUser">
+                    <div class="row">
+                      <div class="col-xl-6 col-lg-6 col-md-6">
+                        <label>Account name</label>
+                        <div class="mb-3">
+                          <input name="username" type="text" class="form-control" placeholder="Account name"
+                            id="usernameCreate">
+                        </div>
+                        <label>Password</label>
+                        <div class="mb-3">
+                          <input name="password" type="password" class="form-control" placeholder="Password"
+                            id="passwordCreate">
+                        </div>
+                        <label>Re-enter password</label>
+                        <div class="mb-3">
+                          <input name="password" type="password" class="form-control" placeholder="Re-enter password"
+                            id="rePasswordCreate">
+                        </div>
+                        <label>Designated IP</label>
+                        <div class="mb-3">
+                          <input name="ipAddress" type="text" class="form-control" placeholder="0.0.0.0" id="IPCreate">
+                        </div>
+
+
+                      </div>
+                      <div class="col-xl-6 col-lg-6 col-md-6">
+                        <label>Email</label>
+                        <div class="mb-3">
+                          <input name="email" type="email" class="form-control" placeholder="abc@gmail.com"
+                            id="emailCreate">
+                        </div>
+                        <label>Full name</label>
+                        <div class="mb-3">
+                          <input name="fullname" type="text" class="form-control" placeholder="Full name"
+                            id="fullnameCreate">
+                        </div>
+                        <label>Permissions</label>
+                        <div class="form-check form-check-info text-left">
+                          <input name="isAdmin" class="form-check-input" type="checkbox" id="isAdminCreate">
+                          <label class="form-check-label" for="flexCheckDefault">
+                            System Administrator
+                          </label>
+                        </div>
+                        <div class="form-check form-check-info text-left">
+                          <input name="isManager" class="form-check-input" type="checkbox" id="isManagerCreate">
+                          <label class="form-check-label" for="flexCheckDefault">
+                            Content Manager
+                          </label>
+                        </div>
+                        <label>Login status</label>
+                        <div class="form-check form-check-info text-left">
+                          <input name="isActive" class="form-check-input" type="checkbox" checked id="isActiveCreate">
+                          <label class="form-check-label" for="flexCheckDefault">
+                            Active
+                          </label>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="text-center">
+                      <button type="submit" class="btn bg-gradient-dark mt-4 mb-0">Create Account</button>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  
+  <script>
+    let formCreateUser = document.getElementById('formCreateUser')
+
+    let usernameCreate = document.getElementById('usernameCreate')
+    let passwordCreate = document.getElementById('passwordCreate')
+    let rePasswordCreate = document.getElementById('rePasswordCreate')
+    let IPCreate = document.getElementById('IPCreate')
+    let emailCreate = document.getElementById('emailCreate')
+    let fullnameCreate = document.getElementById('fullnameCreate')
+    let isAdminCreate = document.getElementById('isAdminCreate')
+    let isManagerCreate = document.getElementById('isManagerCreate')
+    let isActiveCreate = document.getElementById('isActiveCreate')
+
+    formCreateUser.addEventListener('submit', () => {
+      const loginData = {
+        username: usernameCreate.value,
+        password: passwordCreate.value,
+        rePassword: rePasswordCreate.value,
+        ipAddress: IPCreate.value,
+        email: emailCreate.value,
+        fullname: fullnameCreate.value,
+        isAdmin: isAdminCreate.checked,
+        isManager: isManagerCreate.checked,
+        isActive: isActiveCreate.checked
+      }
+      // console.log(loginData)
+      fetch('/api/auth/register', {
+        method: 'POST',
+        body: JSON.stringify(loginData),
+        headers: { 'Content-Type': 'application/json' },
+      }).then((res) => {
+        const response = {
+          status: res.status,
+          data: res.json(),
+        }
+        return response
+      })
+        .then(data => {
+          data.data.then((val) => {
+            if (data.status != 200) {
+              Swal.fire({
+                position: 'center',
+                icon: 'error',
+                text: val.message,
+                showConfirmButton: false,
+                timer: 1500
+              })
+            } else {
+              Swal.fire({
+                position: "center",
+                icon: "success",
+                text: "Account created successfully!",
+                showConfirmButton: false,
+                timer: 1500
+              }).then(() => {
+                window.location.href = "/users"
+              });
+            }
+          })
+        })
+    })
+  </script>
+  

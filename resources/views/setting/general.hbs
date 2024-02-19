@@ -1,0 +1,163 @@
+
+  <div class="container-fluid pt-4">
+    <div class="row">
+      <div class="col-12 col-xl-12">
+        <div class="card h-100">
+          <form role="form" id="formEditGeneral" onsubmit="return false;">
+            <div class="card-header pb-0 p-3">
+              <div class="row">
+                <div class="col-md-8 d-flex align-items-center">
+                  <h6 class="mb-0">General Settings</h6>
+                </div>
+                <div class="col-md-4 text-end">
+                  {{!-- <a class="btn bg-gradient-dark mb-0" href="/setting/general/{{general._id}}/edit">Change Setting</a> --}}
+                  <button class="btn bg-gradient-dark mb-0" type="submit">Update Setting</bu>
+                </div>
+              </div>
+            </div>
+            <div class="card-body p-3">
+              <ul class="list-group">
+                <li class="list-group-item border-0 ps-5 pt-0 text-sm d-flex align-items-center">
+                  <strong class="text-dark">Oil field boundary hex code: </strong> 
+                  <input name="hexCode" type="text" class="border rounded ps-2" value="{{general.hexCode}}" id="hexCodeGeneral">
+                  <span class="ms-4"
+                    style="
+                      display: inline-block;
+                      width: 80px;
+                      height: 20px;
+                      background-color: {{general.hexCode}};
+                      border-radius: 5px
+                      "></span>
+                </li>
+                <li class="list-group-item border-0 ps-5 text-sm">
+                  <strong class="text-dark">Session expires:</strong>
+                  <input name="expiresSessions" type="text" class="border rounded ps-2" value="{{general.expiresSessions}}" id="expiresSessionsGeneral">  
+                </li>
+              </ul>
+            </div>
+
+            <div class="card-header pb-0 p-3">
+              <div class="row">
+                <div class="col-md-8 d-flex align-items-center">
+                  <h6 class="mb-0">Icon Project Setting</h6>
+                </div>
+              </div>
+            </div>
+            <div class="card-body p-3">
+              <ul class="list-group">
+                <li class="list-group-item border-0 ps-5 pt-0 text-sm d-flex align-items-center">
+                  <strong class="text-dark">Icon of oil field: </strong>
+                  <label for="iconOfOilField">
+                    <span class="rounded px-2 py-1 border">choose file</span>
+                  </label>
+                  <input onchange="previewImage(event, 'previewIconOfOilField')" id="iconOfOilField" name="iconOfOilField" class="ms-2 d-none" type="file" accept=".png" />
+                  <div id="previewIconOfOilField" class="m-3"></div>
+                </li>
+                <li class="list-group-item border-0 ps-5 text-sm d-flex align-items-center">
+                  <strong class="text-dark">Icon of client:</strong>
+                  <label for="iconOfClient">
+                    <span class="rounded px-2 py-1 border">choose file</span>
+                  </label>
+                  <input onchange="previewImage(event, 'previewIconOfClient')" id="iconOfClient" name="iconOfClient" class="ms-2 d-none" type="file" accept=".png" /> 
+                  <div id="previewIconOfClient" class="m-3"></div>
+                </li>
+                <li class="list-group-item border-0 ps-5 text-sm d-flex align-items-center">
+                  <strong class="text-dark">Icon of location:</strong>
+                  <label for="iconOfLocation">
+                    <span class="rounded px-2 py-1 border">choose file</span>
+                  </label>
+                  <input onchange="previewImage(event, 'previewIconOfLocation')" id="iconOfLocation"  name="iconOfLocation" class="ms-2 d-none" type="file" accept=".png" />  
+                  <div id="previewIconOfLocation" class="m-3"></div>
+                </li>
+              </ul>
+            </div>
+          </form>
+        </div>
+      </div>
+      
+    </div>
+  </div>
+
+<script>
+
+  function previewImage(event, previewIdPrefix) {
+    const preview = document.querySelector(`#${previewIdPrefix}`);
+    const files = event.target.files;
+    preview.innerHTML = "";
+
+    function readAndPreview(file) {
+      if (file) {
+        const reader = new FileReader();
+
+        reader.addEventListener("load", (e) => {
+          const image = new Image();
+          //image.height = 50;
+          image.width = 85;
+          image.title = file.name;
+          image.src = e.target.result;
+          image.classList = 'm-2'
+          preview.appendChild(image);
+        }, false);
+
+        reader.readAsDataURL(file);
+      }
+    }
+    if (files) {
+      Array.prototype.forEach.call(files, readAndPreview);
+    }
+  }
+
+  const formEditGeneral = document.getElementById('formEditGeneral');
+  const hexCode = document.getElementById('hexCodeGeneral');
+  const expiresSessions = document.getElementById('expiresSessionsGeneral');
+  const iconOfClient = document.getElementById('iconOfClient');
+  const iconOfLocation = document.getElementById('iconOfLocation');
+  const iconOfOilField = document.getElementById('iconOfOilField');
+
+  
+
+
+  formEditGeneral.addEventListener('submit', (e) => {
+    
+    const formData = new FormData();
+    formData.append('hexCode', hexCode.value);
+    formData.append('expiresSessions', expiresSessions.value);
+    formData.append('iconOfClient', iconOfClient.files[0]);
+    //formData.append('iconOfLocation', iconOfLocation.files[0]);
+    //formData.append('iconOfOilField', iconOfOilField.files[0]);
+    
+    fetch('/setting/general/{{general._id}}/edit', {
+      method: 'PUT',
+      body: formData
+    }).then((res) => {
+      const response = {
+        status: res.status,
+        data: res.json(),
+      }
+      return response
+    })
+      .then(data => {
+        data.data.then((val) => {
+          if (data.status != 200) {
+            Swal.fire({
+              position: 'center',
+              icon: 'error',
+              text: val.message,
+              showConfirmButton: false,
+              timer: 1500
+            })
+          } else {
+            Swal.fire({
+              position: "center",
+              icon: "success",
+              text: val.message,
+              showConfirmButton: false,
+              timer: 1500
+            }).then(() => {
+              window.location.reload();
+            });
+          }
+        })
+      })
+  })
+</script>

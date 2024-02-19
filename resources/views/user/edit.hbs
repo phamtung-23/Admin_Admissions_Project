@@ -1,0 +1,161 @@
+
+    <!-- End Navbar -->
+    <div class="container-fluid py-4">
+      <div class="row">
+        <div class="col-12">
+          <div class="card mb-4">
+            <div class="card-header pb-0">
+              <div class="row">
+                <div class="col-6 d-flex align-items-center">
+                  <h6 class="mb-0">Edit account information</h6>
+                </div>
+                <div class="col-6 text-end">
+                  <a class="btn mb-0" href="/users"><i class="fas fa-caret-square-left"></i>&nbsp;&nbsp;Go back</a>
+                </div>
+              </div>
+            </div>
+            <div class="card-body px-0 pt-0 pb-2">
+              <div class="card card-plain mt-2">
+                {{!-- <div class="card-header pb-0 text-left bg-transparent"> --}}
+                  {{!-- <h3 class="font-weight-bolder text-info text-gradient">Thông tin tài khoản mới</h3> --}}
+                  {{!-- <p class="mb-0">Vui lòng điền đầy đủ thông tin bên dưới!</p> --}}
+                {{!-- </div> --}}
+                <div class="card-body">
+                  <form role="form" onsubmit="return false;" id="formEditUser">
+                    <div class="row">
+                      <div class="col-xl-6 col-lg-6 col-md-6">
+                        <label>Account name</label>
+                        <div class="mb-3">
+                          <input name="username" type="text" class="form-control" placeholder="Account name" value="{{userEdit.username}}"
+                            id="usernameEdit">
+                        </div>
+                        <label>Enter new password (Optional)</label>
+                        <div class="mb-3">
+                          <input name="newPassword" type="password" class="form-control" placeholder="Password"
+                            id="newPasswordEdit">
+                        </div>
+                        <label>Designated IP</label>
+                        <div class="mb-3">
+                          <input name="ipAddress" type="text" class="form-control" placeholder="0.0.0.0" id="IPEdit" value="{{userEdit.ipAddress}}">
+                        </div>
+
+
+                      </div>
+                      <div class="col-xl-6 col-lg-6 col-md-6">
+                        <label>Email</label>
+                        <div class="mb-3">
+                          <input name="email" type="email" class="form-control" placeholder="abc@gmail.com" value="{{userEdit.email}}"
+                            id="emailEdit">
+                        </div>
+                        <label>Full name</label>
+                        <div class="mb-3">
+                          <input name="fullname" type="text" class="form-control" placeholder="Full name" value="{{userEdit.fullname}}"
+                            id="fullnameEdit">
+                        </div>
+                        <label>Permissions</label>
+                        <div class="form-check form-check-info text-left">
+                          <input name="isAdmin" class="form-check-input" type="checkbox" id="isAdminEdit" {{#if userEdit.isAdmin}}checked{{/if}}>
+                          <label class="form-check-label" for="flexCheckDefault">
+                            System Administrator
+                          </label>
+                        </div>
+                        <div class="form-check form-check-info text-left">
+                          <input name="isManager" class="form-check-input" type="checkbox" id="isManagerEdit" {{#if userEdit.isManager}}checked{{/if}}>
+                          <label class="form-check-label" for="flexCheckDefault">
+                            Content Manager
+                          </label>
+                        </div>
+                        <label>Login status</label>
+                        <div class="form-check form-check-info text-left">
+                          <input name="isActive" class="form-check-input" type="checkbox" {{#if userEdit.isActive}}checked{{/if}} id="isActiveEdit">
+                          <label class="form-check-label" for="flexCheckDefault">
+                            Active
+                          </label>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="text-center">
+                      <button type="submit" class="btn bg-gradient-dark mt-4 mb-0">Update account</button>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  
+  <script>
+
+    let formEditUser = document.getElementById('formEditUser')
+
+    let usernameEdit = document.getElementById('usernameEdit')
+    let newPasswordEdit = document.getElementById('newPasswordEdit')
+    let IPEdit = document.getElementById('IPEdit')
+    let emailEdit = document.getElementById('emailEdit')
+    let fullnameEdit = document.getElementById('fullnameEdit')
+    let isAdminEdit = document.getElementById('isAdminEdit')
+    let isManagerEdit = document.getElementById('isManagerEdit')
+    let isActiveEdit = document.getElementById('isActiveEdit')
+    let loginData
+    formEditUser.addEventListener('submit', () => {
+      if(newPasswordEdit.value){
+        loginData = {
+          username: usernameEdit.value,
+          password: newPasswordEdit.value,
+          ipAddress: IPEdit.value,
+          email: emailEdit.value,
+          fullname: fullnameEdit.value,
+          isAdmin: isAdminEdit.checked,
+          isManager: isManagerEdit.checked,
+          isActive: isActiveEdit.checked
+        }
+      }
+      else{
+        loginData = {
+          username: usernameEdit.value,
+          ipAddress: IPEdit.value,
+          email: emailEdit.value,
+          fullname: fullnameEdit.value,
+          isAdmin: isAdminEdit.checked,
+          isManager: isManagerEdit.checked,
+          isActive: isActiveEdit.checked
+        }
+      }
+      fetch('/api/users/{{userEdit._id}}', {
+        method: 'PUT',
+        body: JSON.stringify(loginData),
+        headers: { 'Content-Type': 'application/json' },
+      }).then((res) => {
+        const response = {
+          status: res.status,
+          data: res.json(),
+        }
+        return response
+      })
+        .then(data => {
+          data.data.then((val) => {
+            if (data.status != 200) {
+              Swal.fire({
+                position: 'center',
+                icon: 'error',
+                text: val.message,
+                showConfirmButton: false,
+                timer: 1500
+              })
+            } else {
+              Swal.fire({
+                position: "center",
+                icon: "success",
+                text: "Account updated successfully!",
+                showConfirmButton: false,
+                timer: 1500
+              }).then(() => {
+                window.location.href = "/users"
+              });
+            }
+          })
+        })
+    })
+  </script>

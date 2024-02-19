@@ -1,0 +1,485 @@
+<!--
+=========================================================
+* Soft UI Dashboard - v1.0.7
+=========================================================
+
+* Product Page: https://www.creative-tim.com/product/soft-ui-dashboard
+* Copyright 2023 Creative Tim (https://www.creative-tim.com)
+* Licensed under MIT (https://www.creative-tim.com/license)
+* Coded by Creative Tim
+
+=========================================================
+
+* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+-->
+
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+  <link rel="apple-touch-icon" sizes="76x76" href="http://localhost:3001/assets/img/PTSC/ptsc_favicon.ico" />
+  <link rel="icon" href="http://localhost:3001/assets/img/PTSC/ptsc_favicon.ico" />
+  <title>
+    Dashboard PTSC Management
+  </title>
+  <!--     Fonts and icons     -->
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet" />
+  <!-- Nucleo Icons -->
+  <link href="http://localhost:3001/assets/css/nucleo-icons.css" rel="stylesheet" />
+  <link href="http://localhost:3001/assets/css/nucleo-svg.css" rel="stylesheet" />
+  <!-- Font Awesome Icons -->
+  <script src="https://kit.fontawesome.com/42d5adcbca.js" crossorigin="anonymous"></script>
+  <link href="http://localhost:3001/assets/css/nucleo-svg.css" rel="stylesheet" />
+  <!-- CSS Files -->
+  <link id="pagestyle" href="http://localhost:3001/assets/css/soft-ui-dashboard.css?v=1.0.7" rel="stylesheet" />
+  <!-- Nepcha Analytics (nepcha.com) -->
+  <!-- Nepcha is a easy-to-use web analytics. No cookies and fully compliant with GDPR, CCPA and PECR. -->
+  <script defer data-site="YOUR_DOMAIN_HERE" src="https://api.nepcha.com/js/nepcha-analytics.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+</head>
+
+<body class="g-sidenav-show bg-gray-100">
+  <aside class="sidenav navbar navbar-vertical navbar-expand-xs border-0 border-radius-xl my-3 fixed-start ms-3 ps ps--active-y bg-white"
+    data-color="dark" id="sidenav-main">
+    <div class="sidenav-header">
+      <i class="fas fa-times p-3 cursor-pointer text-secondary opacity-5 position-absolute end-0 top-0 d-none d-xl-none"
+        aria-hidden="true" id="iconSidenav">
+      </i>
+      <a class="navbar-brand m-0" href="/">
+        <img src="http://localhost:3001/assets/img/PTSC/ptsc_favicon.ico" class="navbar-brand-img h-100" alt="main_logo" />
+        <span class="ms-1 fs-4 font-weight-bold">PTSC</span>
+      </a>
+    </div>
+    <hr class="horizontal dark mt-0" />
+    <div class="collapse navbar-collapse w-auto" id="sidenav-collapse-main">
+      <ul class="navbar-nav mb-4">
+        <li class="nav-item">
+        {{#if (compare activeSideBar "dashboard")}}
+          <a class="nav-link active" href="/">
+        {{else}}
+          <a class="nav-link" href="/">
+        {{/if}}
+            <div
+              class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
+              {{#if (compare activeSideBar "dashboard")}}
+              <svg style="color: aliceblue;" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512">
+              {{else}}
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512">
+              {{/if}}
+              <!--!Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path d="M280.4 148.3L96 300.1V464a16 16 0 0 0 16 16l112.1-.3a16 16 0 0 0 15.9-16V368a16 16 0 0 1 16-16h64a16 16 0 0 1 16 16v95.6a16 16 0 0 0 16 16.1L464 480a16 16 0 0 0 16-16V300L295.7 148.3a12.2 12.2 0 0 0 -15.3 0zM571.6 251.5L488 182.6V44.1a12 12 0 0 0 -12-12h-56a12 12 0 0 0 -12 12v72.6L318.5 43a48 48 0 0 0 -61 0L4.3 251.5a12 12 0 0 0 -1.6 16.9l25.5 31A12 12 0 0 0 45.2 301l235.2-193.7a12.2 12.2 0 0 1 15.3 0L530.9 301a12 12 0 0 0 16.9-1.6l25.5-31a12 12 0 0 0 -1.7-16.9z"/></svg>
+            </div>
+            <span class="nav-link-text ms-1">Dashboard</span>
+          </a>
+        </li>
+        {{#if (compare user.isAdmin true)}}
+          <li class="nav-item">
+            {{#if (compare activeSideBar "users")}}
+            <a class="nav-link active" href="/users">
+            {{else}}
+            <a class="nav-link" href="/users">
+            {{/if}}
+              <div
+                class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
+                {{#if (compare activeSideBar "users")}}
+                <svg style="color: aliceblue;" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512">
+                {{else}}
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512">
+                {{/if}}
+                <!--!Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path d="M96 224c35.3 0 64-28.7 64-64s-28.7-64-64-64-64 28.7-64 64 28.7 64 64 64zm448 0c35.3 0 64-28.7 64-64s-28.7-64-64-64-64 28.7-64 64 28.7 64 64 64zm32 32h-64c-17.6 0-33.5 7.1-45.1 18.6 40.3 22.1 68.9 62 75.1 109.4h66c17.7 0 32-14.3 32-32v-32c0-35.3-28.7-64-64-64zm-256 0c61.9 0 112-50.1 112-112S381.9 32 320 32 208 82.1 208 144s50.1 112 112 112zm76.8 32h-8.3c-20.8 10-43.9 16-68.5 16s-47.6-6-68.5-16h-8.3C179.6 288 128 339.6 128 403.2V432c0 26.5 21.5 48 48 48h288c26.5 0 48-21.5 48-48v-28.8c0-63.6-51.6-115.2-115.2-115.2zm-223.7-13.4C161.5 263.1 145.6 256 128 256H64c-35.3 0-64 28.7-64 64v32c0 17.7 14.3 32 32 32h65.9c6.3-47.4 34.9-87.3 75.2-109.4z"/></svg>
+              </div>
+              <span class="nav-link-text ms-1">Users</span>
+            </a>
+          </li>
+        {{/if}}
+        <li class="nav-item">
+          {{#if (compare activeSideBar "fields")}}
+          <a class="nav-link active" href="/fields">
+          {{else}}
+          <a class="nav-link" href="/fields">
+          {{/if}}
+            <div
+              class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
+              {{#if (compare activeSideBar "fields")}}
+              <svg style="color: aliceblue;" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512">
+              {{else}}
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512">
+              {{/if}}
+              <!--!Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path d="M629.8 160.3L416 224l-50.5-25.2a64.1 64.1 0 0 0 -28.6-6.8H280v-48h56c8.8 0 16-7.2 16-16v-16c0-8.8-7.2-16-16-16H176c-8.8 0-16 7.2-16 16v16c0 8.8 7.2 16 16 16h56v48h-56L37.7 166.9a31.9 31.9 0 0 0 -5.8-.5C14.7 166.3 0 180.4 0 198.3v95c0 15.5 11.1 28.7 26.3 31.5L96 337.5V384c0 17.7 14.3 32 32 32h274.6c8.6 0 16.8-3.4 22.8-9.5l212.3-214.8c1.5-1.5 2.3-3.5 2.3-5.7V168c0-5.3-5.1-9.2-10.2-7.7zM96 288.7l-48-8.7v-62.4l48 8.7v62.4zm453.3 84.7c0 23.6 19.1 42.7 42.7 42.7s42.7-19.1 42.7-42.7S592 288 592 288s-42.7 61.8-42.7 85.3z"/></svg>
+            </div>
+            <span class="nav-link-text ms-1">Oil fields</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          {{#if (compare activeSideBar "economics")}}
+          <a class="nav-link active" href="/economics">
+          {{else}}
+          <a class="nav-link" href="/economics">
+          {{/if}}
+            <div
+              class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
+              {{#if (compare activeSideBar "economics")}}
+              <svg style="color: aliceblue;" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+              {{else}}
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+              {{/if}}
+              <!--!Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path d="M496 288H16c-8.8 0-16 7.2-16 16v32c0 8.8 7.2 16 16 16h480c8.8 0 16-7.2 16-16v-32c0-8.8-7.2-16-16-16zm0-128H16c-8.8 0-16 7.2-16 16v32c0 8.8 7.2 16 16 16h480c8.8 0 16-7.2 16-16v-32c0-8.8-7.2-16-16-16z"/></svg>
+            </div>
+            <span class="nav-link-text ms-1">Economic Zone</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          {{#if (compare activeSideBar "pipe")}}
+          <a class="nav-link active" href="/pipe">
+          {{else}}
+          <a class="nav-link" href="/pipe">
+          {{/if}}
+            <div
+              class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
+              {{#if (compare activeSideBar "pipe")}}
+              <svg style="color: aliceblue;" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+              {{else}}
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+              {{/if}}
+              <!--!Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path d="M496 288H16c-8.8 0-16 7.2-16 16v32c0 8.8 7.2 16 16 16h480c8.8 0 16-7.2 16-16v-32c0-8.8-7.2-16-16-16zm0-128H16c-8.8 0-16 7.2-16 16v32c0 8.8 7.2 16 16 16h480c8.8 0 16-7.2 16-16v-32c0-8.8-7.2-16-16-16z"/></svg>
+            </div>
+            <span class="nav-link-text ms-1">Pipe Line</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          {{#if (compare activeSideBar "customer")}}
+          <a class="nav-link active" href="/customer">
+          {{else}}
+          <a class="nav-link" href="/customer">
+          {{/if}}
+            <div
+              class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
+              {{#if (compare activeSideBar "customer")}}
+              <svg style="color: aliceblue;" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
+              {{else}}
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
+              {{/if}}
+              <!--!Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path d="M224 256c70.7 0 128-57.3 128-128S294.7 0 224 0 96 57.3 96 128s57.3 128 128 128zm95.8 32.6L272 480l-32-136 32-56h-96l32 56-32 136-47.8-191.4C56.9 292 0 350.3 0 422.4V464c0 26.5 21.5 48 48 48h352c26.5 0 48-21.5 48-48v-41.6c0-72.1-56.9-130.4-128.2-133.8z"/></svg>
+            </div>
+            <span class="nav-link-text ms-1">Client</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          {{#if (compare activeSideBar "service")}}
+          <a class="nav-link active" href="/service">
+          {{else}}
+          <a class="nav-link" href="/service">
+          {{/if}}
+            <div
+              class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
+              {{#if (compare activeSideBar "service")}}
+              <svg style="color: aliceblue;" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 352 512">
+              {{else}}
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 352 512">
+              {{/if}}
+              <!--!Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path d="M205.2 22.1c-7.9-28.8-49.4-30.1-58.4 0C100 179.9 0 222.7 0 333.9 0 432.4 78.7 512 176 512s176-79.7 176-178.1c0-111.8-99.8-153.3-146.8-311.8zM176 448c-61.8 0-112-50.3-112-112 0-8.8 7.2-16 16-16s16 7.2 16 16c0 44.1 35.9 80 80 80 8.8 0 16 7.2 16 16s-7.2 16-16 16z"/></svg>
+            </div>
+            <span class="nav-link-text ms-1">Service</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          {{#if (compare activeSideBar "legendGroup")}}
+          <a class="nav-link active" href="/legend-group">
+          {{else}}
+          <a class="nav-link" href="/legend-group">
+          {{/if}}
+            <div
+              class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
+              {{#if (compare activeSideBar "legendGroup")}}
+              <svg style="color: aliceblue;" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512">
+              {{else}}
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512">
+              {{/if}}
+              <!--!Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path d="M0 117.7v346.3c0 11.3 11.4 19.1 21.9 14.9L160 416V32L20.1 88A32 32 0 0 0 0 117.7zM192 416l192 64V96L192 32v384zM554.1 33.2L416 96v384l139.9-56A32 32 0 0 0 576 394.3V48c0-11.3-11.4-19.1-21.9-14.9z"/></svg>
+            </div>
+            <span class="nav-link-text ms-1">Legend Group</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          {{#if (compare activeSideBar "legendItem")}}
+          <a class="nav-link active" href="/legend-item">
+          {{else}}
+          <a class="nav-link" href="/legend-item">
+          {{/if}}
+            <div
+              class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
+              {{#if (compare activeSideBar "legendItem")}}
+              <svg style="color: aliceblue;" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512">
+              {{else}}
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512">
+              {{/if}}
+              <!--!Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path d="M408 120c0 54.6-73.1 151.9-105.2 192c-7.7 9.6-22 9.6-29.6 0C241.1 271.9 168 174.6 168 120C168 53.7 221.7 0 288 0s120 53.7 120 120zm8 80.4c3.5-6.9 6.7-13.8 9.6-20.6c.5-1.2 1-2.5 1.5-3.7l116-46.4C558.9 123.4 576 135 576 152V422.8c0 9.8-6 18.6-15.1 22.3L416 503V200.4zM137.6 138.3c2.4 14.1 7.2 28.3 12.8 41.5c2.9 6.8 6.1 13.7 9.6 20.6V451.8L32.9 502.7C17.1 509 0 497.4 0 480.4V209.6c0-9.8 6-18.6 15.1-22.3l122.6-49zM327.8 332c13.9-17.4 35.7-45.7 56.2-77V504.3L192 449.4V255c20.5 31.3 42.3 59.6 56.2 77c20.5 25.6 59.1 25.6 79.6 0zM288 152a40 40 0 1 0 0-80 40 40 0 1 0 0 80z"/></svg>
+            </div>
+            <span class="nav-link-text ms-1">Legend Item</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          {{#if (compare activeSideBar "icon")}}
+          <a class="nav-link active" href="/icon">
+          {{else}}
+          <a class="nav-link" href="/icon">
+          {{/if}}
+            <div
+              class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
+              {{#if (compare activeSideBar "icon")}}
+              <svg style="color: aliceblue;" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512">
+              {{else}}
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512">
+              {{/if}}
+              <!--!Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path d="M160 32c-35.3 0-64 28.7-64 64V320c0 35.3 28.7 64 64 64H512c35.3 0 64-28.7 64-64V96c0-35.3-28.7-64-64-64H160zM396 138.7l96 144c4.9 7.4 5.4 16.8 1.2 24.6S480.9 320 472 320H328 280 200c-9.2 0-17.6-5.3-21.6-13.6s-2.9-18.2 2.9-25.4l64-80c4.6-5.7 11.4-9 18.7-9s14.2 3.3 18.7 9l17.3 21.6 56-84C360.5 132 368 128 376 128s15.5 4 20 10.7zM192 128a32 32 0 1 1 64 0 32 32 0 1 1 -64 0zM48 120c0-13.3-10.7-24-24-24S0 106.7 0 120V344c0 75.1 60.9 136 136 136H456c13.3 0 24-10.7 24-24s-10.7-24-24-24H136c-48.6 0-88-39.4-88-88V120z"/></svg>
+            </div>
+            <span class="nav-link-text ms-1">Icons</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          {{#if (compare activeSideBar "project")}}
+          <a class="nav-link active" href="/project">
+          {{else}}
+          <a class="nav-link" href="/project">
+          {{/if}}
+            <div
+              class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
+              {{#if (compare activeSideBar "project")}}
+              <svg style="color: aliceblue;" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512">
+              {{else}}
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512">
+              {{/if}}
+              <!--!Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path d="M264.5 5.2c14.9-6.9 32.1-6.9 47 0l218.6 101c8.5 3.9 13.9 12.4 13.9 21.8s-5.4 17.9-13.9 21.8l-218.6 101c-14.9 6.9-32.1 6.9-47 0L45.9 149.8C37.4 145.8 32 137.3 32 128s5.4-17.9 13.9-21.8L264.5 5.2zM476.9 209.6l53.2 24.6c8.5 3.9 13.9 12.4 13.9 21.8s-5.4 17.9-13.9 21.8l-218.6 101c-14.9 6.9-32.1 6.9-47 0L45.9 277.8C37.4 273.8 32 265.3 32 256s5.4-17.9 13.9-21.8l53.2-24.6 152 70.2c23.4 10.8 50.4 10.8 73.8 0l152-70.2zm-152 198.2l152-70.2 53.2 24.6c8.5 3.9 13.9 12.4 13.9 21.8s-5.4 17.9-13.9 21.8l-218.6 101c-14.9 6.9-32.1 6.9-47 0L45.9 405.8C37.4 401.8 32 393.3 32 384s5.4-17.9 13.9-21.8l53.2-24.6 152 70.2c23.4 10.8 50.4 10.8 73.8 0z"/></svg>
+            </div>
+            <span class="nav-link-text ms-1">Projects</span>
+          </a>
+        </li>
+        <li class="nav-item mt-3">
+          <h6 class="ps-4 ms-2 text-uppercase text-xs font-weight-bolder opacity-6">Account pages</h6>
+        </li>
+        <li class="nav-item">
+          {{#if (compare activeSideBar "profile")}}
+          <a class="nav-link active" href="/profile">
+          {{else}}
+          <a class="nav-link" href="/profile">
+          {{/if}}
+            <div
+              class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
+              {{#if (compare activeSideBar "profile")}}
+              <svg style="color: aliceblue;" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512">
+              {{else}}
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512">
+              {{/if}}
+              <!--!Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path d="M528 32H48C21.5 32 0 53.5 0 80v16h576V80c0-26.5-21.5-48-48-48zM0 432c0 26.5 21.5 48 48 48h480c26.5 0 48-21.5 48-48V128H0v304zm352-232c0-4.4 3.6-8 8-8h144c4.4 0 8 3.6 8 8v16c0 4.4-3.6 8-8 8H360c-4.4 0-8-3.6-8-8v-16zm0 64c0-4.4 3.6-8 8-8h144c4.4 0 8 3.6 8 8v16c0 4.4-3.6 8-8 8H360c-4.4 0-8-3.6-8-8v-16zm0 64c0-4.4 3.6-8 8-8h144c4.4 0 8 3.6 8 8v16c0 4.4-3.6 8-8 8H360c-4.4 0-8-3.6-8-8v-16zM176 192c35.3 0 64 28.7 64 64s-28.7 64-64 64-64-28.7-64-64 28.7-64 64-64zM67.1 396.2C75.5 370.5 99.6 352 128 352h8.2c12.3 5.1 25.7 8 39.8 8s27.6-2.9 39.8-8h8.2c28.4 0 52.5 18.5 60.9 44.2 3.2 9.9-5.2 19.8-15.6 19.8H82.7c-10.4 0-18.8-10-15.6-19.8z"/></svg>
+            </div>
+            <span class="nav-link-text ms-1">Profile</span>
+          </a>
+        </li>
+        <li class="nav-item mt-3">
+          <h6 class="ps-4 ms-2 text-uppercase text-xs font-weight-bolder opacity-6">Setting pages</h6>
+        </li>
+        <li class="nav-item">
+          {{#if (compare activeSideBar "version")}}
+          <a class="nav-link active" href="/setting/version">
+          {{else}}
+          <a class="nav-link" href="/setting/version">
+          {{/if}}
+            <div
+              class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
+              {{#if (compare activeSideBar "version")}}
+              <svg style="color: aliceblue;" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512">
+              {{else}}
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512">
+              {{/if}}
+              <!--!Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path d="M16 64C16 28.7 44.7 0 80 0H304c35.3 0 64 28.7 64 64V448c0 35.3-28.7 64-64 64H80c-35.3 0-64-28.7-64-64V64zM224 448a32 32 0 1 0 -64 0 32 32 0 1 0 64 0zM304 64H80V384H304V64z"/></svg>
+            </div>
+            <span class="nav-link-text ms-1">App version</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          {{#if (compare activeSideBar "general")}}
+          <a class="nav-link active" href="/setting/general">
+          {{else}}
+          <a class="nav-link" href="/setting/general">
+          {{/if}}
+            <div
+              class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
+              {{#if (compare activeSideBar "general")}}
+              <svg style="color: aliceblue;" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+              {{else}}
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+              {{/if}} 
+              <!--!Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path d="M0 416c0 17.7 14.3 32 32 32l54.7 0c12.3 28.3 40.5 48 73.3 48s61-19.7 73.3-48L480 448c17.7 0 32-14.3 32-32s-14.3-32-32-32l-246.7 0c-12.3-28.3-40.5-48-73.3-48s-61 19.7-73.3 48L32 384c-17.7 0-32 14.3-32 32zm128 0a32 32 0 1 1 64 0 32 32 0 1 1 -64 0zM320 256a32 32 0 1 1 64 0 32 32 0 1 1 -64 0zm32-80c-32.8 0-61 19.7-73.3 48L32 224c-17.7 0-32 14.3-32 32s14.3 32 32 32l246.7 0c12.3 28.3 40.5 48 73.3 48s61-19.7 73.3-48l54.7 0c17.7 0 32-14.3 32-32s-14.3-32-32-32l-54.7 0c-12.3-28.3-40.5-48-73.3-48zM192 128a32 32 0 1 1 0-64 32 32 0 1 1 0 64zm73.3-64C253 35.7 224.8 16 192 16s-61 19.7-73.3 48L32 64C14.3 64 0 78.3 0 96s14.3 32 32 32l86.7 0c12.3 28.3 40.5 48 73.3 48s61-19.7 73.3-48L480 128c17.7 0 32-14.3 32-32s-14.3-32-32-32L265.3 64z"/></svg>
+            </div>
+            <span class="nav-link-text ms-1">General</span>
+          </a>
+        </li>
+      </ul>
+    </div>
+  </aside>
+  <main class="main-content position-relative max-height-vh-100 h-100 border-radius-lg">
+    <!-- Navbar -->
+    <nav class="navbar navbar-main navbar-expand-lg px-0 mx-4 shadow-none border-radius-xl position-sticky blur shadow-blur mt-4 left-auto top-1 z-index-sticky" id="navbarBlur" navbar-scroll="true">
+      <div class="container-fluid py-1 px-3">
+        <nav aria-label="breadcrumb">
+          {{!-- <ol class="breadcrumb bg-transparent mb-0 pb-0 pt-1 px-0 me-sm-6 me-5">
+            <li class="breadcrumb-item text-sm"><a class="opacity-5 text-dark" href="javascript:;">Pages</a></li>
+            <li class="breadcrumb-item text-sm text-dark active" aria-current="page">Dashboard</li>
+          </ol> --}}
+          <h6 class="font-weight-bolder mb-0">Content Management</h6>
+        </nav>
+        <div class="collapse navbar-collapse mt-sm-0 mt-2 me-md-0 me-sm-4" id="navbar">
+          <div class="ms-md-auto pe-md-3 d-flex align-items-center">
+            {{#if (compare activeSideBar "dashboard")}}
+            <div></div>
+            {{else}}
+            <div class="input-group">
+              <span class="input-group-text text-body"><i class="fas fa-search" aria-hidden="true"></i></span>
+              <input type="text" id="search-item" class="form-control ps-3" placeholder="Type here..." />
+            </div>
+            {{/if}}
+          </div>
+          <ul class="navbar-nav justify-content-end">
+            <li class="nav-item px-3 d-flex align-items-center">
+              <a href="javascript:;" class="nav-link text-body font-weight-bold px-0">
+                <i class="fa fa-user me-sm-1"></i>
+                <span class="d-sm-inline d-none">{{user.fullname}}</span>
+              </a>
+            </li>
+            <li class="nav-item d-flex align-items-center">
+              <a href="javascript:;" class="nav-link text-body font-weight-bold px-0">
+                <i class="fas fa-sign-out-alt me-sm-1"></i>
+                <span id="btnLogout" class="d-sm-inline d-none">Logout</span>
+              </a>
+            </li>
+            <li class="nav-item d-xl-none ps-3 d-flex align-items-center">
+              <a href="javascript:;" class="nav-link text-body p-0" id="iconNavbarSidenav">
+                <div class="sidenav-toggler-inner">
+                  <i class="sidenav-toggler-line"></i>
+                  <i class="sidenav-toggler-line"></i>
+                  <i class="sidenav-toggler-line"></i>
+                </div>
+              </a>
+            </li>
+            {{!-- <li class="nav-item px-3 d-flex align-items-center">
+              <a href="javascript:;" class="nav-link text-body p-0">
+                <i class="fa fa-cog fixed-plugin-button-nav cursor-pointer"></i>
+              </a>
+            </li> --}}
+          </ul>
+        </div>
+      </div>
+    </nav>
+    {{{body}}}
+  </main>
+  <!--   Core JS Files   -->
+  <script src="http://localhost:3001/assets/js/core/popper.min.js"></script>
+  <script src="http://localhost:3001/assets/js/core/bootstrap.min.js"></script>
+  <script src="http://localhost:3001/assets/js/plugins/perfect-scrollbar.min.js"></script>
+  <script src="http://localhost:3001/assets/js/plugins/smooth-scrollbar.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  
+  <script>
+    
+
+    const btnLogout = document.getElementById("btnLogout")
+    btnLogout.addEventListener('click', () => {
+      Swal.fire({
+        text: "Are you sure you want to log out?",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        confirmButtonText: "Yes",
+        cancelButtonText: "Cancel",
+        reverseButtons: true
+      }).then((result) => {
+        if (result.isConfirmed) {
+          window.location.href = "/logout";
+        }
+      });
+    })
+
+    function checkConnection() {
+      var image = new Image();
+      image.src = 'https://img.freepik.com/free-vector/bird-colorful-logo-gradient-vector_343694-1365.jpg?size=338&ext=jpg&ga=GA1.1.632798143.1705514400&semt=ais';
+
+
+      image.onerror = function () {
+        clearInterval(interval);
+        console.log("offline")
+        let timerInterval;
+        Swal.fire({
+          title: "Disconnect internet!",
+          html: "Logout after <b></b> milliseconds.",
+          timer: 5000,
+          timerProgressBar: true,
+          didOpen: () => {
+            Swal.showLoading();
+            const timer = Swal.getPopup().querySelector("b");
+            timerInterval = setInterval(() => {
+              timer.textContent = `${Swal.getTimerLeft()}`;
+            }, 100);
+          },
+          willClose: () => {
+            clearInterval(timerInterval);
+          }
+        }).then((result) => {
+          /* Read more about handling dismissals below */
+          if (result.dismiss === Swal.DismissReason.timer) {
+            // clear cookie "access_token"
+            window.location.href = "/logout";
+          }
+        });
+      }
+    }
+    const interval = setInterval(async () => {
+      checkConnection();
+    }, 3000);
+
+  </script>
+  <!-- Github buttons -->
+  <script async defer src="https://buttons.github.io/buttons.js"></script>
+  <!-- Control Center for Soft Dashboard: parallax effects, scripts for the example pages etc -->
+  <script src="http://localhost:3001/assets/js/soft-ui-dashboard.min.js?v=1.0.7"></script>
+  <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+  <script>
+    const sidebarLinks = document.querySelectorAll('.navbar-nav a.nav-link');
+    // Set active class on current page link
+    sidebarLinks.forEach(link => {
+      if (link.classList.contains('active')) {
+        // Focus on the link
+        link.focus();
+    }
+    });
+
+  // Get the input field
+  const searchInput = document.getElementById('search-item');
+
+  // Add an event listener to detect input changes
+  searchInput.addEventListener('input', function() {
+      // Get the value of the input field
+      const searchTerm = searchInput.value;
+
+      // Make an AJAX call to the API
+      // Replace the URL with your API endpoint
+      $.ajax({
+        url: `search?model={{activeSideBar}}&q=${searchTerm}`, // Replace with your actual API endpoint
+        method: 'GET', // or 'GET' depending on your server configuration
+        // data: { selectedValues: selectedValuesOfProject },
+        success: function (data) {
+          
+          // console.log(data)
+          // html = ``
+          $('#body-table-user').html(data)
+        },
+        error: function (error) {
+          // Handle errors
+          // $('#dynamicContent').html(``)
+        }
+      });
+  });
+  </script>
+</body>
+
+</html>
