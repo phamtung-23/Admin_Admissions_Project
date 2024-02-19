@@ -5,6 +5,7 @@ import Project from '../../models/Project.js'
 import Service from '../../models/Service.js'
 import { mongooseToObject } from '../../utils/mongooses.js'
 import nodemailer from 'nodemailer'
+import bcrypt from 'bcryptjs'
 
 // [GET] /login
 export const showLogin = (req, res, next) => {
@@ -141,7 +142,11 @@ export const handleOtp = async (req, res, next)=>{
 
     return res.status(400).json({ message: 'Incorrect OTP code, please try again!'});
   }
-  return res.status(200).json({ message: 'Verification successful!'});
+
+  const idUser = await User.findOne({email}).select('_id');
+  console.log(idUser._id.toString())
+
+  return res.status(200).json({ message: 'Verification successful!', idUser: idUser._id.toString()});
 }
 
 
@@ -214,4 +219,42 @@ export const handleSearch = async (req,res)=>{
   }
 }
 
+// [GET] /reset
+export const showResetPassword = (req,res)=>{ 
+  const idUser = req.params.id;
+  res.render('auth/reset', {
+    layout: false,
+    idUser
+  })
+}
+// [POST] /reset/:id
+export const handleResetPassword = async (req,res)=>{
+  const {newPassword} = req.body;
+  const idUser = req.params.id;
+  const user  = await User.findOne({_id:idUser})
+  if(!user){
+    return res.status(404).json({ message: 'User does not exist, please check again!'});
+  }
+  if(!newPassword){
+    return res.status(400).json({ message: 'New Password is required!'});
+  }
+   // check new password
+  if(newPassword){
+    const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)(?=.*\W)[A-Za-z\d\W]{8,16}$/;
+    if (!passwordRegex.test(newPassword)) {
+      return res.status(400).json({ message: 'Password must be 8-16 characters long, with at least 1 alphabet character and 1 special character' });
+    }
+  }
+  if(newPassword){
+    // check password correct
+    const isPasswordCorrect = await bcrypt.compare(newPassword, user.password)
+    if(isPasswordCorrect) {
+      return res.status(400).json({ message:'New password must be different from the old password!'})
+    }
+  }
+  const updateUser = await User.findByIdAndUpdate(req.params.id, {$set: {
+    password: bcrypt.hashSync(newPassword, bcrypt.genSaltSync(10))
+  }},{new:true})
+  res.status(200).json({message:'Password reset successfully!'});
+}
 

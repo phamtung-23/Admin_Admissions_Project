@@ -34,10 +34,6 @@
                           <input name="newPassword" type="password" class="form-control" placeholder="Password"
                             id="newPasswordEdit">
                         </div>
-                        <label>Designated IP</label>
-                        <div class="mb-3">
-                          <input name="ipAddress" type="text" class="form-control" placeholder="0.0.0.0" id="IPEdit" value="{{userEdit.ipAddress}}">
-                        </div>
 
 
                       </div>
@@ -92,7 +88,6 @@
 
     let usernameEdit = document.getElementById('usernameEdit')
     let newPasswordEdit = document.getElementById('newPasswordEdit')
-    let IPEdit = document.getElementById('IPEdit')
     let emailEdit = document.getElementById('emailEdit')
     let fullnameEdit = document.getElementById('fullnameEdit')
     let isAdminEdit = document.getElementById('isAdminEdit')
@@ -104,7 +99,6 @@
         loginData = {
           username: usernameEdit.value,
           password: newPasswordEdit.value,
-          ipAddress: IPEdit.value,
           email: emailEdit.value,
           fullname: fullnameEdit.value,
           isAdmin: isAdminEdit.checked,
@@ -115,7 +109,6 @@
       else{
         loginData = {
           username: usernameEdit.value,
-          ipAddress: IPEdit.value,
           email: emailEdit.value,
           fullname: fullnameEdit.value,
           isAdmin: isAdminEdit.checked,

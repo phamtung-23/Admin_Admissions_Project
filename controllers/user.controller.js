@@ -5,11 +5,11 @@ import User from '../models/User.js';
 // UPDATE User [PUT] /api/users/:id
 export const updateUser = async (req, res, next) => {
   try {
-    const {username, password, ipAddress, email, fullname} = req.body
+    const {username, password, email, fullname} = req.body
     const _id = req.params.id
     
     // Check if username and password are not empty
-    if (!username || !ipAddress || !fullname || !email) {
+    if (!username || !fullname || !email) {
       return res.status(400).json({ message: 'These are the required fields!' });
     }
     

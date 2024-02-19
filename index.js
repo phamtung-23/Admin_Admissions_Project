@@ -8,24 +8,17 @@ import cookieParser from 'cookie-parser'
 import authRoute from './routes/auth.js'
 import usersRoute from './routes/users.js'
 import oilfieldRoute from './routes/oilField.js'
-import economicRoute from './routes/economic.js'
-import pipeLineRoute from './routes/pipeLine.js'
-import legendGroupRoute from './routes/legendGroup.js'
-import legendItemRoute from './routes/legendItem.js'
 import projectRoute from './routes/project.js'
 
 import beUsersRoute from './routes/admin/users.js'
 import siteRoute from './routes/admin/site.js'
 import beOilfieldRoute from './routes/admin/oilField.js'
-import beEconomicRoute from './routes/admin/economic.js'
-import bePipeLine from './routes/admin/pipeLine.js'
 import beCustomer from './routes/admin/customer.js'
 import beService from './routes/admin/service.js'
-import beLegendGroup from './routes/admin/legendGroup.js'
-import beLegendItem from './routes/admin/legendItem.js'
 import beIcon from './routes/admin/icon.js'
 import beProject from './routes/admin/project.js'
 import beSetting from './routes/admin/setting.js'
+import beUniversity from './routes/admin/university.js'
 
 import handlebars from 'express-handlebars'
 
@@ -71,13 +64,10 @@ app.set('views', path.join(__dirname, 'resources/views'))
 // Router
 app.use('/',siteRoute)
 app.use('/users',beUsersRoute)
+app.use('/university',beUniversity)
 app.use('/fields',beOilfieldRoute)
-app.use('/economics',beEconomicRoute)
-app.use('/pipe',bePipeLine)
 app.use('/customer',beCustomer)
 app.use('/service',beService)
-app.use('/legend-group',beLegendGroup)
-app.use('/legend-item',beLegendItem)
 app.use('/icon',beIcon)
 app.use('/project',beProject)
 app.use('/setting',beSetting)
@@ -86,10 +76,6 @@ app.use('/setting',beSetting)
 app.use('/api/auth',authRoute)
 app.use('/api/users',usersRoute)
 app.use('/api/fields',oilfieldRoute)
-app.use('/api/economic',economicRoute)
-app.use('/api/pipe',pipeLineRoute)
-app.use('/api/legend-group',legendGroupRoute)
-app.use('/api/legend-item',legendItemRoute)
 app.use('/api/project',projectRoute)
 
 

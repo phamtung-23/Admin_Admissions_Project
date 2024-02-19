@@ -1,5 +1,5 @@
 import express from 'express';
-import { errorPermission, showLogin, logout, showDashboard, showForgotPassword, handleForgotPassword, showInputOtp, handleOtp, handleSearch } from '../../controllers/admin/auth.dashboard.js';
+import { errorPermission, showLogin, logout, showDashboard, showForgotPassword, handleForgotPassword, showInputOtp, handleOtp, handleSearch, showResetPassword, handleResetPassword } from '../../controllers/admin/auth.dashboard.js';
 import { login } from '../../controllers/auth.controller.js';
 
 import { verifyDashboard, verifyDashboardManager } from '../../utils/verifyToken.js';
@@ -25,6 +25,11 @@ router.get('/forgot/otp', showInputOtp)
 router.post('/forgot/otp', handleOtp)
 router.get('/forgot', showForgotPassword)
 router.post('/forgot', handleForgotPassword)
+
+// show reset password
+router.get('/reset/:id', showResetPassword)
+// handle reset password
+router.post('/reset/:id', handleResetPassword)
 
 // search
 router.get('/search', handleSearch)

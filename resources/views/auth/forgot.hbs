@@ -133,7 +133,7 @@
                   Swal.fire({
                     position: "center",
                     icon: "success",
-                    text: "Gửi mã thành công!",
+                    text: val.message,
                     showConfirmButton: false,
                     timer: 2000
                   }).then(() => {
@@ -195,11 +195,11 @@
                   Swal.fire({
                     position: "center",
                     icon: "success",
-                    text: "Gửi mã thành công!",
+                    text: val.message,
                     showConfirmButton: false,
                     timer: 2000
                   }).then(() => {
-                    
+                    window.location.href = `/reset/${val.idUser}`
                   });
                 }
               })

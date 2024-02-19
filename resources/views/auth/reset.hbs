@@ -7,7 +7,7 @@
   <link rel="apple-touch-icon" sizes="76x76" href="../assets/img/PTSC/ptsc_favicon.ico">
   <link rel="icon" href="../assets/img/PTSC/ptsc_favicon.ico">
   <title>
-    Login Admissions Support
+    Reset Password
   </title>
   <!--     Fonts and icons     -->
   <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet" />
@@ -35,32 +35,27 @@
             <div class="col-xl-4 col-lg-5 col-md-6 d-flex flex-column mx-auto">
               <div class="card card-plain mt-8">
                 <div class="card-header pb-0 text-left bg-transparent">
-                  <h3 class="font-weight-bolder text-ptsc text-gradient">Welcome to admin admissions support</h3>
-                  <p class="mb-0">Enter your username and password to sign in!</p>
+                  <h3 class="font-weight-bolder text-ptsc text-gradient">Change password</h3>
+                  <p class="mb-0">Enter your new password to change!</p>
                 </div>
                 <div class="card-body">
-                  <form onsubmit="return false;" id="form-signIn">
-                    <label>Username</label>
+                  <form onsubmit="return false;" id="formChangePass">
+                    <label>New Password</label>
                     <div class="mb-3">
-                      <input name="username" type="text" class="form-control" placeholder="Username" id="usernameSignIn">
-                    </div>
-                    <label>Password</label>
-                    <div class="mb-3">
-                      <input name="password" type="password" class="form-control" placeholder="Password" id="passSignIn">
+                      <input name="newPassword" type="password" class="form-control" placeholder="Enter New Password" id="newPassChange">
                     </div>
                     {{!-- <div class="form-check form-switch">
                       <input class="form-check-input" type="checkbox" id="rememberMe" checked="">
                       <label class="form-check-label" for="rememberMe">Remember me</label>
                     </div> --}}
                     <div class="text-center">
-                      <button class="btn bg-gradient-ptsc w-100 text-light mt-4 mb-0">Sign In</button>
+                      <button class="btn bg-gradient-ptsc w-100 text-light mt-4 mb-0">Confirm</button>
                     </div>
                   </form>
                 </div>
                 <div class="card-footer text-center pt-0 px-lg-2 px-1">
                   <p class="mb-4 text-sm mx-auto">
-                    Have you forgotten the password?
-                    <a href="/forgot" class="text-gradient text-ptsc font-weight-bold">Reset password</a>
+                    <a href="/login" class="text-gradient text-ptsc font-weight-bold">Back to login</a>
                   </p>
                 </div>
               </div>
@@ -92,21 +87,19 @@
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
    <script>
       //xử li form đăng nhập
-      let formSignIn = document.getElementById('form-signIn')
+      let formChangePass = document.getElementById('formChangePass')
 
-      let usernameSignIn = document.getElementById('usernameSignIn')
-      let passSignIn = document.getElementById('passSignIn')
+      let newPassChange = document.getElementById('newPassChange')
 
       let alertErrorSignIn = document.getElementById('errorSignIn')
 
-      formSignIn.addEventListener('submit', () => {
-        const loginData = {
-          username: usernameSignIn.value,
-          password: passSignIn.value,
+      formChangePass.addEventListener('submit', () => {
+        const formData = {
+          newPassword: newPassChange.value,
         }
-        fetch('/login',{
+        fetch(`/reset/{{idUser}}`,{
           method: 'POST',
-          body: JSON.stringify(loginData),
+          body: JSON.stringify(formData),
           headers: {'Content-Type': 'application/json'},
         }).then((res) => {
             const response = {
@@ -121,14 +114,20 @@
                   Swal.fire({
                     position: 'center',
                     icon: 'error',
-                    text: val.message.vi,
+                    text: val.message,
+                    showConfirmButton: false,
+                    timer: 1500
+                    })
+                }else{
+                  Swal.fire({
+                    position: 'center',
+                    icon: 'success',
+                    text: val.message,
                     showConfirmButton: false,
                     timer: 1500
                     }).then(()=>{
-                        
+                      window.location.replace(`/`)
                     })
-                }else{
-                  window.location.replace(`/`)
                 }
               })
             })

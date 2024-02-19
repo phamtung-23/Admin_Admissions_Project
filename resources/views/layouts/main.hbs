@@ -18,21 +18,21 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-  <link rel="apple-touch-icon" sizes="76x76" href="http://localhost:3001/assets/img/PTSC/ptsc_favicon.ico" />
-  <link rel="icon" href="http://localhost:3001/assets/img/PTSC/ptsc_favicon.ico" />
+  <link rel="apple-touch-icon" sizes="76x76" href="http://localhost:3300/assets/img/my-project/icon-admissions.png" />
+  <link rel="icon" href="http://localhost:3300/assets/img/my-project/icon-admissions.png" />
   <title>
-    Dashboard PTSC Management
+    Dashboard Admin Admissions
   </title>
   <!--     Fonts and icons     -->
   <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet" />
   <!-- Nucleo Icons -->
-  <link href="http://localhost:3001/assets/css/nucleo-icons.css" rel="stylesheet" />
-  <link href="http://localhost:3001/assets/css/nucleo-svg.css" rel="stylesheet" />
+  <link href="http://localhost:3300/assets/css/nucleo-icons.css" rel="stylesheet" />
+  <link href="http://localhost:3300/assets/css/nucleo-svg.css" rel="stylesheet" />
   <!-- Font Awesome Icons -->
   <script src="https://kit.fontawesome.com/42d5adcbca.js" crossorigin="anonymous"></script>
-  <link href="http://localhost:3001/assets/css/nucleo-svg.css" rel="stylesheet" />
+  <link href="http://localhost:3300/assets/css/nucleo-svg.css" rel="stylesheet" />
   <!-- CSS Files -->
-  <link id="pagestyle" href="http://localhost:3001/assets/css/soft-ui-dashboard.css?v=1.0.7" rel="stylesheet" />
+  <link id="pagestyle" href="http://localhost:3300/assets/css/soft-ui-dashboard.css?v=1.0.7" rel="stylesheet" />
   <!-- Nepcha Analytics (nepcha.com) -->
   <!-- Nepcha is a easy-to-use web analytics. No cookies and fully compliant with GDPR, CCPA and PECR. -->
   <script defer data-site="YOUR_DOMAIN_HERE" src="https://api.nepcha.com/js/nepcha-analytics.js"></script>
@@ -48,8 +48,8 @@
         aria-hidden="true" id="iconSidenav">
       </i>
       <a class="navbar-brand m-0" href="/">
-        <img src="http://localhost:3001/assets/img/PTSC/ptsc_favicon.ico" class="navbar-brand-img h-100" alt="main_logo" />
-        <span class="ms-1 fs-4 font-weight-bold">PTSC</span>
+        <img src="http://localhost:3300/assets/img/my-project/icon-admissions.png" class="navbar-brand-img h-100" alt="main_logo" />
+        <span class="ms-1 fs-5 font-weight-bold">Admissions </span>
       </a>
     </div>
     <hr class="horizontal dark mt-0" />
@@ -94,6 +94,24 @@
           </li>
         {{/if}}
         <li class="nav-item">
+          {{#if (compare activeSideBar "university")}}
+          <a class="nav-link active" href="/university">
+          {{else}}
+          <a class="nav-link" href="/university">
+          {{/if}}
+            <div
+              class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
+              {{#if (compare activeSideBar "university")}}
+              <svg style="color: aliceblue;" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
+              {{else}}
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
+              {{/if}}
+              <!--!Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path d="M496 128v16a8 8 0 0 1 -8 8h-24v12c0 6.6-5.4 12-12 12H60c-6.6 0-12-5.4-12-12v-12H24a8 8 0 0 1 -8-8v-16a8 8 0 0 1 4.9-7.4l232-88a8 8 0 0 1 6.1 0l232 88A8 8 0 0 1 496 128zm-24 304H40c-13.3 0-24 10.7-24 24v16a8 8 0 0 0 8 8h464a8 8 0 0 0 8-8v-16c0-13.3-10.7-24-24-24zM96 192v192H60c-6.6 0-12 5.4-12 12v20h416v-20c0-6.6-5.4-12-12-12h-36V192h-64v192h-64V192h-64v192h-64V192H96z"/></svg>
+            </div>
+            <span class="nav-link-text ms-1">University</span>
+          </a>
+        </li>
+        <li class="nav-item">
           {{#if (compare activeSideBar "fields")}}
           <a class="nav-link active" href="/fields">
           {{else}}
@@ -111,42 +129,7 @@
             <span class="nav-link-text ms-1">Oil fields</span>
           </a>
         </li>
-        <li class="nav-item">
-          {{#if (compare activeSideBar "economics")}}
-          <a class="nav-link active" href="/economics">
-          {{else}}
-          <a class="nav-link" href="/economics">
-          {{/if}}
-            <div
-              class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
-              {{#if (compare activeSideBar "economics")}}
-              <svg style="color: aliceblue;" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
-              {{else}}
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
-              {{/if}}
-              <!--!Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path d="M496 288H16c-8.8 0-16 7.2-16 16v32c0 8.8 7.2 16 16 16h480c8.8 0 16-7.2 16-16v-32c0-8.8-7.2-16-16-16zm0-128H16c-8.8 0-16 7.2-16 16v32c0 8.8 7.2 16 16 16h480c8.8 0 16-7.2 16-16v-32c0-8.8-7.2-16-16-16z"/></svg>
-            </div>
-            <span class="nav-link-text ms-1">Economic Zone</span>
-          </a>
-        </li>
-        <li class="nav-item">
-          {{#if (compare activeSideBar "pipe")}}
-          <a class="nav-link active" href="/pipe">
-          {{else}}
-          <a class="nav-link" href="/pipe">
-          {{/if}}
-            <div
-              class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
-              {{#if (compare activeSideBar "pipe")}}
-              <svg style="color: aliceblue;" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
-              {{else}}
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
-              {{/if}}
-              <!--!Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path d="M496 288H16c-8.8 0-16 7.2-16 16v32c0 8.8 7.2 16 16 16h480c8.8 0 16-7.2 16-16v-32c0-8.8-7.2-16-16-16zm0-128H16c-8.8 0-16 7.2-16 16v32c0 8.8 7.2 16 16 16h480c8.8 0 16-7.2 16-16v-32c0-8.8-7.2-16-16-16z"/></svg>
-            </div>
-            <span class="nav-link-text ms-1">Pipe Line</span>
-          </a>
-        </li>
+       
         <li class="nav-item">
           {{#if (compare activeSideBar "customer")}}
           <a class="nav-link active" href="/customer">
@@ -183,42 +166,7 @@
             <span class="nav-link-text ms-1">Service</span>
           </a>
         </li>
-        <li class="nav-item">
-          {{#if (compare activeSideBar "legendGroup")}}
-          <a class="nav-link active" href="/legend-group">
-          {{else}}
-          <a class="nav-link" href="/legend-group">
-          {{/if}}
-            <div
-              class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
-              {{#if (compare activeSideBar "legendGroup")}}
-              <svg style="color: aliceblue;" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512">
-              {{else}}
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512">
-              {{/if}}
-              <!--!Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path d="M0 117.7v346.3c0 11.3 11.4 19.1 21.9 14.9L160 416V32L20.1 88A32 32 0 0 0 0 117.7zM192 416l192 64V96L192 32v384zM554.1 33.2L416 96v384l139.9-56A32 32 0 0 0 576 394.3V48c0-11.3-11.4-19.1-21.9-14.9z"/></svg>
-            </div>
-            <span class="nav-link-text ms-1">Legend Group</span>
-          </a>
-        </li>
-        <li class="nav-item">
-          {{#if (compare activeSideBar "legendItem")}}
-          <a class="nav-link active" href="/legend-item">
-          {{else}}
-          <a class="nav-link" href="/legend-item">
-          {{/if}}
-            <div
-              class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
-              {{#if (compare activeSideBar "legendItem")}}
-              <svg style="color: aliceblue;" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512">
-              {{else}}
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512">
-              {{/if}}
-              <!--!Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path d="M408 120c0 54.6-73.1 151.9-105.2 192c-7.7 9.6-22 9.6-29.6 0C241.1 271.9 168 174.6 168 120C168 53.7 221.7 0 288 0s120 53.7 120 120zm8 80.4c3.5-6.9 6.7-13.8 9.6-20.6c.5-1.2 1-2.5 1.5-3.7l116-46.4C558.9 123.4 576 135 576 152V422.8c0 9.8-6 18.6-15.1 22.3L416 503V200.4zM137.6 138.3c2.4 14.1 7.2 28.3 12.8 41.5c2.9 6.8 6.1 13.7 9.6 20.6V451.8L32.9 502.7C17.1 509 0 497.4 0 480.4V209.6c0-9.8 6-18.6 15.1-22.3l122.6-49zM327.8 332c13.9-17.4 35.7-45.7 56.2-77V504.3L192 449.4V255c20.5 31.3 42.3 59.6 56.2 77c20.5 25.6 59.1 25.6 79.6 0zM288 152a40 40 0 1 0 0-80 40 40 0 1 0 0 80z"/></svg>
-            </div>
-            <span class="nav-link-text ms-1">Legend Item</span>
-          </a>
-        </li>
+        
         <li class="nav-item">
           {{#if (compare activeSideBar "icon")}}
           <a class="nav-link active" href="/icon">
@@ -279,24 +227,7 @@
         <li class="nav-item mt-3">
           <h6 class="ps-4 ms-2 text-uppercase text-xs font-weight-bolder opacity-6">Setting pages</h6>
         </li>
-        <li class="nav-item">
-          {{#if (compare activeSideBar "version")}}
-          <a class="nav-link active" href="/setting/version">
-          {{else}}
-          <a class="nav-link" href="/setting/version">
-          {{/if}}
-            <div
-              class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
-              {{#if (compare activeSideBar "version")}}
-              <svg style="color: aliceblue;" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512">
-              {{else}}
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512">
-              {{/if}}
-              <!--!Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path d="M16 64C16 28.7 44.7 0 80 0H304c35.3 0 64 28.7 64 64V448c0 35.3-28.7 64-64 64H80c-35.3 0-64-28.7-64-64V64zM224 448a32 32 0 1 0 -64 0 32 32 0 1 0 64 0zM304 64H80V384H304V64z"/></svg>
-            </div>
-            <span class="nav-link-text ms-1">App version</span>
-          </a>
-        </li>
+       
         <li class="nav-item">
           {{#if (compare activeSideBar "general")}}
           <a class="nav-link active" href="/setting/general">
@@ -374,10 +305,10 @@
     {{{body}}}
   </main>
   <!--   Core JS Files   -->
-  <script src="http://localhost:3001/assets/js/core/popper.min.js"></script>
-  <script src="http://localhost:3001/assets/js/core/bootstrap.min.js"></script>
-  <script src="http://localhost:3001/assets/js/plugins/perfect-scrollbar.min.js"></script>
-  <script src="http://localhost:3001/assets/js/plugins/smooth-scrollbar.min.js"></script>
+  <script src="http://localhost:3300/assets/js/core/popper.min.js"></script>
+  <script src="http://localhost:3300/assets/js/core/bootstrap.min.js"></script>
+  <script src="http://localhost:3300/assets/js/plugins/perfect-scrollbar.min.js"></script>
+  <script src="http://localhost:3300/assets/js/plugins/smooth-scrollbar.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   
   <script>
@@ -441,7 +372,7 @@
   <!-- Github buttons -->
   <script async defer src="https://buttons.github.io/buttons.js"></script>
   <!-- Control Center for Soft Dashboard: parallax effects, scripts for the example pages etc -->
-  <script src="http://localhost:3001/assets/js/soft-ui-dashboard.min.js?v=1.0.7"></script>
+  <script src="http://localhost:3300/assets/js/soft-ui-dashboard.min.js?v=1.0.7"></script>
   <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
   <script>
     const sidebarLinks = document.querySelectorAll('.navbar-nav a.nav-link');

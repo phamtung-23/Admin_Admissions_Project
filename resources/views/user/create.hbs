@@ -39,11 +39,6 @@
                           <input name="password" type="password" class="form-control" placeholder="Re-enter password"
                             id="rePasswordCreate">
                         </div>
-                        <label>Designated IP</label>
-                        <div class="mb-3">
-                          <input name="ipAddress" type="text" class="form-control" placeholder="0.0.0.0" id="IPCreate">
-                        </div>
-
 
                       </div>
                       <div class="col-xl-6 col-lg-6 col-md-6">
@@ -97,7 +92,6 @@
     let usernameCreate = document.getElementById('usernameCreate')
     let passwordCreate = document.getElementById('passwordCreate')
     let rePasswordCreate = document.getElementById('rePasswordCreate')
-    let IPCreate = document.getElementById('IPCreate')
     let emailCreate = document.getElementById('emailCreate')
     let fullnameCreate = document.getElementById('fullnameCreate')
     let isAdminCreate = document.getElementById('isAdminCreate')
@@ -109,7 +103,6 @@
         username: usernameCreate.value,
         password: passwordCreate.value,
         rePassword: rePasswordCreate.value,
-        ipAddress: IPCreate.value,
         email: emailCreate.value,
         fullname: fullnameCreate.value,
         isAdmin: isAdminCreate.checked,

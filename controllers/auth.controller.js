@@ -8,7 +8,7 @@ import General from '../models/General.js';
 // [POST] /api/auth/register
 export const register = async (req, res, next) => {
   try {
-    const { username, password, ipAddress, fullname, email, rePassword } = req.body;
+    const { username, password, fullname, email, rePassword } = req.body;
 
     // Check if username and password are not empty
     if (!username || !password || !fullname || !email) {
@@ -44,12 +44,7 @@ export const register = async (req, res, next) => {
       return res.status(400).json({ message: 'Email already exists, please try a different email!' });
     }
     
-     // check format ip address 0.0.0.0
-     const ipAddressRegex = /^([0-9]{1,3}\.){3}[0-9]{1,3}$/;
-     if (!ipAddressRegex.test(ipAddress)) {
-       return res.status(400).json({ message: 'Invalid IP address!' });
-     }
-
+     
     const salt = bcrypt.genSaltSync(10);
     const hash = bcrypt.hashSync(password, salt);
 
@@ -81,11 +76,7 @@ export const login = async (req, res, next) => {
     if(!user.isActive) {
       return next(createError(400, {vi:'Tài khoản của bạn đã bị khóa. Vui lòng liên hệ với quản trị viên để được hỗ trợ.',en:"Your account has been locked. Please contact the administrator for support."}))
     }
-    // check ip address
-    // if (req.body.ipAddress != user.ipAddress){
-    if ('127.0.0.1' != user.ipAddress){
-      return next(createError(400, {vi:'Thiết bị không kết nối với địa chỉ IP đã chỉ định. Vui lòng kiểm tra lại cài đặt WiFi.',en:"The device does not connect to the specified IP address. Please check your WiFi settings again."}))
-    }
+   
     // set cookie for login
     const token = jwt.sign({id: user._id, isAdmin: user.isAdmin, isManager: user.isManager}, process.env.JWT)
     const {password, isAdmin, isManager, isActive, ...otherDetails} = user._doc
@@ -118,11 +109,7 @@ export const loginMobile = async (req, res, next) => {
     if(!user.isActive) {
       return next(createError(400, {vi:'Tài khoản của bạn đã bị khóa. Vui lòng liên hệ với quản trị viên để được hỗ trợ.',en:"Your account has been locked. Please contact the administrator for support."}))
     }
-    // check ip address
-    // if (req.body.ipAddress != user.ipAddress){
-    if ('127.0.0.1' != user.ipAddress){
-      return next(createError(400, {vi:'Thiết bị không kết nối với địa chỉ IP đã chỉ định. Vui lòng kiểm tra lại cài đặt WiFi.',en:"The device does not connect to the specified IP address. Please check your WiFi settings again."}))
-    }
+    
     // set cookie for login
     const token = jwt.sign({id: user._id, isAdmin: user.isAdmin, isManager: user.isManager}, process.env.JWT)
     // const {password, isAdmin, isManager, isActive, ...otherDetails} = user._doc
