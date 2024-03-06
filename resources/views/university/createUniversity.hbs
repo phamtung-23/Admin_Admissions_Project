@@ -3,13 +3,19 @@
   <div class="row">
     <div class="col-12">
       <div class="card mb-4">
-        <div class="card-header pb-0">
+        <form role="form" id="formCreateUniversity" enctype="multipart/form-data">
+        <div class="card-header shadow-none border-radius-xl position-sticky blur left-auto top-1 z-index-sticky pb-3">
           <div class="row">
             <div class="col-6 d-flex align-items-center">
-              <h6 class="mb-0">Add new University</h6>
+              <h6 class="mb-0 fs-4">Add new University</h6>
             </div>
-            <div class="col-6 text-end">
-              <a class="btn mb-0" href="/university"><i class="fas fa-caret-square-left"></i>&nbsp;&nbsp;Go back</a>
+            <div class="col-6 d-flex  justify-content-end align-items-center">
+              <div>
+                <a class="btn m-2" href="/university"><i class="fas fa-caret-square-left"></i>&nbsp;&nbsp;Go back</a>
+              </div>
+              <div>
+                <button type="submit" class="btn bg-gradient-dark m-2">Create </button>
+              </div>
             </div>
           </div>
         </div>
@@ -21,11 +27,10 @@
               <p class="mb-0 text-danger">{{message}}</p>
             </div>
             <div class="card-body">
-              <form role="form" id="formCreateUniversity" enctype="multipart/form-data">
                 <div class="row">
                   <div class="col-xl-6 col-lg-6 col-md-6">
                     <label>Name</label>
-                    <div class="mb-3 ms-4 border p-4 mb-2 bg-gray-100 border-radius-lg">
+                    <div class="mb-3 ms-4 border p-4 mb-2 border-radius-lg">
                       <label>Vietnamese</label>
                       <input name="nameVi" type="text" class="form-control" placeholder="Vietnamese name">
                       <label>English</label>
@@ -37,18 +42,24 @@
                         accept=".png" />
                     </div>
                     <div id="preview_image_cover" class="m-3"></div>
+                    <label>Icon</label>
+                    <div class="mb-3">
+                      <input onchange="previewImage(event, 'preview_icon')"  name="icon" class="form-control" type="file"
+                        accept=".png" />
+                    </div>
+                    <div id="preview_icon" class="m-3"></div>
                     <label>Images Gallery</label>
                     <div class="mb-3">
                       <input onchange="previewImage(event,'preview_gallery')" name="imgGallery" class="form-control" type="file" multiple
                         accept=".png" />
                     </div>
                     <div id="preview_gallery" class="m-3"></div>
-                    <label>Admissions information (.pdf)</label>
+                    {{!-- <label>Admissions information (.pdf)</label>
                     <div class="mb-3">
                       <input onchange="previewFilePDF(event,'preview_pdf')" name="infoAdmission" class="form-control" type="file" multiple
                         accept=".pdf" />
                     </div>
-                    <div id="preview_pdf" class="m-3"></div>
+                    <div id="preview_pdf" class="m-3"></div> --}}
                   </div>
                   
                   <div class="col-xl-6 col-lg-6 col-md-6">
@@ -56,6 +67,11 @@
                     <div class="mb-3">
                       <input name="code" type="text" class="form-control" placeholder="XYZ"
                         id="codeCreate">
+                    </div>
+                    <label>Type of university</label>
+                    <div class="mb-3">
+                      <input name="type" type="text" class="form-control" placeholder="Type of university"
+                        id="typeCreate">
                     </div>
                     <label>Training System</label>
                     <div class="mb-3">
@@ -89,13 +105,10 @@
                     </div>
                   </div>
                 </div>
-                <div class="text-center">
-                  <button type="submit" class="btn bg-gradient-dark mt-4 mb-0">Create </button>
-                </div>
-              </form>
             </div>
           </div>
         </div>
+        </form>
       </div>
     </div>
   </div>

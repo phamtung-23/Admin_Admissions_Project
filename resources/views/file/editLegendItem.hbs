@@ -1,0 +1,217 @@
+<!-- End Navbar -->
+<div class="container-fluid py-4">
+  <div class="row">
+    <div class="col-12">
+      <div class="card mb-4">
+        <form role="form" id="formEditLegendItem" enctype="multipart/form-data">
+        <div class="card-header shadow-none border-radius-xl position-sticky blur left-auto top-1 z-index-sticky pb-3">
+          <div class="row">
+            <div class="col-6 d-flex align-items-center">
+              <h6 class="mb-0">Update Legend Item</h6>
+            </div>
+            <div class="col-6 d-flex  justify-content-end align-items-center">
+              <div>
+                <a class="btn m-2" href="/legend-item"><i class="fas fa-caret-square-left"></i>&nbsp;&nbsp;Go back</a>
+              </div>
+              <div>
+                <button type="submit" class="btn bg-gradient-dark m-2">Update </button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="card-body px-0 pt-0 pb-2">
+          <div class="card card-plain mt-2">
+            <div class="card-header pb-0 text-left bg-transparent">
+              {{!-- <h3 class="font-weight-bolder text-info text-gradient">Thông tin tài khoản mới</h3> --}}
+              <p class="mb-0">Please fill in all the required information below!</p>
+              <p class="mb-0 text-danger">{{message}}</p>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                  <div class="col-xl-6 col-lg-6 col-md-6">
+                    <label class="required">Vietnamese name</label>
+                    <div class="mb-3">
+                      <input name="nameVi" type="text" value="{{legendItem.name.vi}}" class="form-control" placeholder="Vietnamese name"
+                        id="nameViEdit">
+                    </div>
+                    <label class="required">English name</label>
+                    <div class="mb-3">
+                      <input name="nameEn" type="text" value="{{legendItem.name.en}}" class="form-control" placeholder="English name"
+                        id="nameEnEdit">
+                    </div>
+                    <label class="required">Legend groups</label>
+                    <div class="mb-3">
+                      <select name="legendGroup" id="legendGroupEdit" class="form-control">
+                        {{#each legendGroup.data}}
+                          {{#if (compare this._id ../legendGroup.idLegendGroup)}}
+                            <option value="{{this._id}}" selected>{{this.name.vi}}</option>
+                          {{else}}
+                            <option value="{{this._id}}">{{this.name.vi}}</option>
+                          {{/if}}
+                        {{/each}}
+                      </select>
+                    </div>
+                  </div>
+                  <div class="col-xl-6 col-lg-6 col-md-6">
+                    <label>Hex code color</label>
+                    <div class="mb-3">
+                      <input name="colorCode" type="text" class="form-control" placeholder="#000000" maxlength="7"
+                       {{#if legendItem.colorCode}}
+                        value="{{legendItem.colorCode}}"
+                        {{else}}
+                        value="#"
+                        {{/if}}
+                        id="colorCodeEdit">
+                    </div>
+                    <label>Image color (png)</label>
+                    <div class="mb-3">
+                      <input onchange="previewImageProject(event, 'preview_image')" id="colorImageEdit" name="colorImage" class="form-control" type="file" name="myImage" accept=".png" />
+                       <div id="preview_image" class="m-3">
+                        {{#if legendItem.colorImage}}
+                          <div class="img-pos d-flex p-1">
+                            <img width="50" src="../../{{legendItem.colorImage}}" alt="image error" class="">
+                            <a href="javascript:;" class="close" onclick="hideImg('{{field._id}}')">&times;</a>
+                          </div>
+                        {{/if}}
+                       </div>
+                    </div>
+                  </div>
+                </div>
+            </div>
+          </div>
+        </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+
+  function previewImageProject(event, previewIdPrefix) {
+    if(checkImageType(event)){
+
+      const preview = document.querySelector(`#${previewIdPrefix}`);
+      const files = event.target.files;
+      preview.innerHTML = "";
+
+      function readAndPreview(file) {
+        if (file) {
+          const reader = new FileReader();
+
+          reader.addEventListener("load", (e) => {
+            const image = new Image();
+            //image.height = 50
+            image.title = file.name;
+            image.src = e.target.result;
+            image.width = '50'
+            preview.appendChild(image);
+          }, false);
+
+          reader.readAsDataURL(file);
+        }
+      }
+      if (files) {
+        Array.prototype.forEach.call(files, readAndPreview);
+      }
+    }
+  }
+
+    let isDeleteImage = false
+    function hideImg(idService, indexImg) {
+      // Find the closest parent with class 'img-gallery-item' and hide its child 'img' element
+
+      var imgPos = $(event.target).closest('.img-pos');
+      var imgElement = imgPos.find('img');
+      var deleteButton = imgPos.find('a');
+
+      if (imgElement.length > 0) {
+        imgPos.remove()
+        isDeleteImage = true
+      }
+    
+    }
+  const formEditLegendItem = document.getElementById('formEditLegendItem');
+  const nameViEdit = document.getElementById('nameViEdit');
+  const nameEnEdit = document.getElementById('nameEnEdit');
+  const legendGroupEdit = document.getElementById('legendGroupEdit');
+  const colorCodeEdit = document.getElementById('colorCodeEdit');
+  const colorImageEdit = document.getElementById('colorImageEdit');
+
+  function checkImageType(event) {
+      const file = event.target.files[0];
+      if (file.type !== 'image/png') {
+        Swal.fire({
+          position: 'center',
+          icon: 'error',
+          text: 'Please choose a png file!',
+          showConfirmButton: false,
+          timer: 3000
+        });
+        event.target.value = '';
+        return false // Reset the file input
+      }
+      return true
+    }
+  // const message = document.getElementById('message');
+  formEditLegendItem.addEventListener('submit', (e) => {
+    e.preventDefault();
+
+    if (colorCodeEdit.value == "#"){
+      colorCodeEdit.value = ""
+    }
+
+    const formData = new FormData();
+    formData.append('nameVi', nameViEdit.value);
+    formData.append('nameEn', nameEnEdit.value);
+    formData.append('legendGroup', legendGroupEdit.value);
+    formData.append('colorCode', colorCodeEdit.value);
+    formData.append('colorImage', colorImageEdit.files[0]);
+    formData.append('isDeleteImage', isDeleteImage);
+
+    Swal.fire({
+      width: '100',
+      background: 'unset',
+      timer: 500,
+      didOpen: () => {
+        Swal.showLoading();
+      },
+    }).then(()=>{
+
+    fetch('/legend-item/{{legendItem._id}}', {
+      method: 'PUT',
+      body: formData,
+      
+    }).then((res) => {
+      const response = {
+        status: res.status,
+        data: res.json(),
+      }
+      return response
+    })
+      .then(data => {
+        data.data.then((val) => {
+          if (data.status != 200) {
+            Swal.fire({
+              position: 'center',
+              icon: 'error',
+              text: val.message,
+              showConfirmButton: false,
+              timer: 3000
+            })
+          } else {
+            Swal.fire({
+              position: "center",
+              icon: "success",
+              text: val.message,
+              showConfirmButton: false,
+              timer: 1500
+            }).then(() => {
+              window.location.href = "/legend-item"
+            });
+          }
+        })
+      })
+    })
+  })
+</script>

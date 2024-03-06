@@ -1,11 +1,10 @@
 import OTP from '../../models/OTP.js'
 import User from '../../models/User.js'
-import Customer from '../../models/Customer.js'
-import Project from '../../models/Project.js'
-import Service from '../../models/Service.js'
 import { mongooseToObject } from '../../utils/mongooses.js'
 import nodemailer from 'nodemailer'
 import bcrypt from 'bcryptjs'
+import University from '../../models/University.js';
+import Banner from '../../models/Banner.js';
 
 // [GET] /login
 export const showLogin = (req, res, next) => {
@@ -20,15 +19,13 @@ export const showDashboard = async (req, res, next) => {
   try {
     const user  = await User.findOne({_id: req.user.id})
     const userNumber  = await User.find().countDocuments()
-    const customerNumber  = await Customer.find().countDocuments()
-    const projectNumber = await Project.find().countDocuments()
-    const serviceNumber = await Service.find().countDocuments()
+    const numberUniversity = await University.find().countDocuments()
+    const numberBanner = await Banner.find().countDocuments()
     res.render('home', {
       user: mongooseToObject(user),
       userNumber,
-      customerNumber,
-      projectNumber,
-      serviceNumber,
+      numberUniversity,
+      numberBanner,
       activeSideBar: 'dashboard'
     })
   } catch (error) {

@@ -65,16 +65,16 @@ export const login = async (req, res, next) => {
     const user  = await User.findOne({username: req.body.username})
     // check user exist
     if(!user) {
-      return next(createError(404, {vi:'Tên đăng nhập hoặc mật khẩu không chính xác. Vui lòng thử lại.!',en:"Username or password incorrect. Please try again."}))
+      return next(createError(404, {message:"Username or password incorrect. Please try again."}))
     }
     // check password correct
     const isPasswordCorrect = await bcrypt.compare(req.body.password, user.password)
     if(!isPasswordCorrect) {
-      return next(createError(400, {vi:'Tên đăng nhập hoặc mật khẩu không chính xác. Vui lòng thử lại.!',en:"Username or password incorrect. Please try again."}))
+      return next(createError(400, {message:"Username or password incorrect. Please try again."}))
     }
     // check active account
     if(!user.isActive) {
-      return next(createError(400, {vi:'Tài khoản của bạn đã bị khóa. Vui lòng liên hệ với quản trị viên để được hỗ trợ.',en:"Your account has been locked. Please contact the administrator for support."}))
+      return next(createError(400, {message:"Your account has been locked. Please contact the administrator for support."}))
     }
    
     // set cookie for login

@@ -1,0 +1,174 @@
+<!-- End Navbar -->
+<div class="container-fluid py-4">
+  <div class="row">
+    <div class="col-12">
+      <div class="card mb-4">
+        <form role="form" id="formCreateIcon" enctype="multipart/form-data">
+        <div class="card-header shadow-none border-radius-xl position-sticky blur left-auto top-1 z-index-sticky pb-3">
+          <div class="row">
+            <div class="col-6 d-flex align-items-center">
+              <h6 class="mb-0">Update Banner</h6>
+            </div>
+            <div class="col-6 d-flex  justify-content-end align-items-center">
+              <div>
+                <a class="btn m-2" href="/banner"><i class="fas fa-caret-square-left"></i>&nbsp;&nbsp;Go back</a>
+              </div>
+              <div>
+                <button type="submit" class="btn bg-gradient-dark m-2">Update </button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="card-body px-0 pt-0 pb-2">
+          <div class="card card-plain mt-2">
+            <div class="card-header pb-0 text-left bg-transparent">
+              {{!-- <h3 class="font-weight-bolder text-info text-gradient">Thông tin tài khoản mới</h3> --}}
+              <p class="mb-0">Please fill in all the required information below!</p>
+              <p class="mb-0 text-danger">{{message}}</p>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                  <div class="col-xl-6 col-lg-6 col-md-6">
+                    <label class="required">Name</label>
+                    <div class="mb-3">
+                      <input name="iconName" type="text" class="form-control" placeholder="Icon name" value="{{banner.name}}" id="iconNameEdit">
+                    </div>
+                  </div>
+                  <div class="col-xl-6 col-lg-6 col-md-6">
+                    <label>Choose Image</label>
+                    <div class="mb-3">
+                      <input onchange="previewImageProject(event, 'preview_image')" id="iconImage" name="iconImage" class="form-control" type="file" accept="image/*"/>
+                    </div>
+                  </div>
+                  <div class="col-xl-6 col-lg-6 col-md-6">
+                    <label>Status</label>
+                    <div class="form-check form-check-info text-left">
+                      <input name="isActive" class="form-check-input" type="checkbox" {{#if banner.status}}checked{{/if}}  id="isActiveCreate">
+                      <label class="form-check-label" for="flexCheckDefault">
+                        Active
+                      </label>
+                    </div>
+                  </div>
+                  <div class="col-xl-6 col-lg-6 col-md-6">
+                    <div id="preview_image" class="m-3">
+                        {{#if banner.imageUrl}}
+                          <img width="100px" src="../../{{banner.imageUrl}}" alt="image error">
+                        {{/if}}
+                      </div>
+                  </div>
+                </div>
+            </div>
+          </div>
+        </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/diacritics"></script>
+<script>
+  
+
+  function previewImageProject(event, previewIdPrefix) {
+      if(checkImageType(event)){
+        const preview = document.querySelector(`#${previewIdPrefix}`);
+        const files = event.target.files;
+        preview.innerHTML = "";
+
+        function readAndPreview(file) {
+          if (file) {
+            const reader = new FileReader();
+
+            reader.addEventListener("load", (e) => {
+              const image = new Image();
+              //image.height = 50
+              image.title = file.name;
+              image.src = e.target.result;
+              image.width = '100'
+              preview.appendChild(image);
+            }, false);
+
+            reader.readAsDataURL(file);
+          }
+        }
+        if (files) {
+          Array.prototype.forEach.call(files, readAndPreview);
+        }
+      }
+    }
+
+  const formCreateIcon = document.getElementById('formCreateIcon');
+  const iconName = document.getElementById('iconNameEdit');
+  const iconImage = document.getElementById('iconImage');
+  const isActiveCreate = document.getElementById('isActiveCreate');
+
+  function checkImageType(event) {
+    const file = event.target.files[0];
+    const imageString = file.type.substring(0, file.type.indexOf('/')); // Extracts 'image'
+    if (imageString !== 'image') {
+      Swal.fire({
+        position: 'center',
+        icon: 'error',
+        text: 'Only image formats are allowed!',
+        showConfirmButton: false,
+        timer: 3000
+      });
+      event.target.value = '';
+      return false // Reset the file input
+    }
+    return true
+  }
+  // const message = document.getElementById('message');
+  formCreateIcon.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const formData = new FormData();
+    formData.append('iconName', iconName.value);
+    formData.append('iconImage', iconImage.files[0]);
+    formData.append('isActiveCreate', isActiveCreate.checked);
+
+    Swal.fire({
+      width: '100',
+      background: 'unset',
+      timer: 500,
+      didOpen: () => {
+        Swal.showLoading();
+      },
+    }).then(()=>{
+
+    fetch('/banner/{{banner._id}}', {
+      method: 'PUT',
+      body: formData,
+      
+    }).then((res) => {
+      const response = {
+        status: res.status,
+        data: res.json(),
+      }
+      return response
+    })
+      .then(data => {
+        data.data.then((val) => {
+          if (data.status != 200) {
+            Swal.fire({
+              position: 'center',
+              icon: 'error',
+              text: val.message,
+              showConfirmButton: false,
+              timer: 3000
+            })
+          } else {
+            Swal.fire({
+              position: "center",
+              icon: "success",
+              text: val.message,
+              showConfirmButton: false,
+              timer: 1500
+            }).then(() => {
+              window.location.href = "/banner"
+            });
+          }
+        })
+      })
+    })
+  })
+</script>

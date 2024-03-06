@@ -2,9 +2,9 @@ import express from 'express';
 
 
 import { verifyDashboard, verifyDashboardManager } from '../../utils/verifyToken.js';
-import { getCreateProject, getDetailProject, getEditProject, getListProject, getServicesSelect, getServicesSelectProject, handleCreateProject, handleDeleteImage, handleDeleteProject, handleUpdateProject } from '../../controllers/admin/project.dashboard.js';
 import multer from 'multer';
-import { getCreateUniversity, getListUniversity, handleCreateUniversity } from '../../controllers/admin/university.dashboard.js';
+import { getCreateUniversity, getEditUniversity, getListUniversity, handleCreateUniversity, handleDeleteUniversity, handleUpdateUniversity } from '../../controllers/admin/university.dashboard.js';
+import { handleGetPdfForUniversity } from '../../controllers/admin/file.dashboard.js';
 
 var storage = multer.diskStorage({
   destination: function (req, file, cb) {
@@ -19,16 +19,17 @@ var upload = multer({ storage: storage })
 
 const router = express.Router();
 
+router.post('/getPdf', handleGetPdfForUniversity);
 router.post('/', verifyDashboardManager, upload.any(), handleCreateUniversity);
-// router.put('/:id', verifyDashboardManager,upload.any(), handleUpdateProject);
+router.put('/:id', verifyDashboardManager,upload.any(), handleUpdateUniversity);
 
 // router.delete('/:id/:index', verifyDashboardManager, handleDeleteImage);
-// router.delete('/:id', verifyDashboardManager, handleDeleteProject);
+router.delete('/:id', verifyDashboardManager, handleDeleteUniversity);
 
 // router.post('/getServicesSelect', verifyDashboardManager, getServicesSelect); 
 // router.post('/getServicesSelectProject/:id', verifyDashboardManager, getServicesSelectProject); 
 
-// router.get('/:id/edit', verifyDashboardManager, getEditProject); 
+router.get('/:id/edit', verifyDashboardManager, getEditUniversity); 
 // router.get('/detail/:id', verifyDashboardManager, getDetailProject); 
 router.get('/create', verifyDashboardManager, getCreateUniversity); 
 router.get('/', verifyDashboardManager, getListUniversity); 

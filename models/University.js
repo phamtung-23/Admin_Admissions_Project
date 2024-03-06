@@ -19,10 +19,18 @@ const UniversitySchema = new mongoose.Schema({
     type: String,
     required: true
   },
+  icon:{
+    type: String,
+    required: true
+  },
   code: {
     type: String, 
     required: true,
     unique: true
+  },
+  type:{
+    type: String,
+    required: true
   },
   trainingSystem:{
     type: String,
@@ -51,8 +59,11 @@ const UniversitySchema = new mongoose.Schema({
     type: [String],
     required: true
   },
+  // infoAdmission:{
+  //   type: [String]
+  // }
   infoAdmission:{
-    type: [String]
+    type: String
   }
   
 },{timestamps: true})

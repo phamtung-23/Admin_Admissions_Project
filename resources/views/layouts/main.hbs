@@ -43,7 +43,13 @@
 <body class="g-sidenav-show bg-gray-100">
   <aside class="sidenav navbar navbar-vertical navbar-expand-xs border-0 border-radius-xl my-3 fixed-start ms-3 ps ps--active-y bg-white"
     data-color="dark" id="sidenav-main">
-    <div class="sidenav-header">
+    <div class="sidenav-header" style="
+        position: -webkit-sticky;
+        position: sticky;
+        top: 0;
+        background-color: #ffffff;
+        font-size: 20px;
+    ">
       <i class="fas fa-times p-3 cursor-pointer text-secondary opacity-5 position-absolute end-0 top-0 d-none d-xl-none"
         aria-hidden="true" id="iconSidenav">
       </i>
@@ -112,97 +118,62 @@
           </a>
         </li>
         <li class="nav-item">
-          {{#if (compare activeSideBar "fields")}}
-          <a class="nav-link active" href="/fields">
+          {{#if (compare activeSideBar "chat")}}
+          <a class="nav-link active" href="/chat">
           {{else}}
-          <a class="nav-link" href="/fields">
+          <a class="nav-link" href="/chat">
           {{/if}}
             <div
               class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
-              {{#if (compare activeSideBar "fields")}}
-              <svg style="color: aliceblue;" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512">
+              {{#if (compare activeSideBar "chat")}}
+              <svg  style="color: aliceblue;" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512">
               {{else}}
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512">
               {{/if}}
-              <!--!Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path d="M629.8 160.3L416 224l-50.5-25.2a64.1 64.1 0 0 0 -28.6-6.8H280v-48h56c8.8 0 16-7.2 16-16v-16c0-8.8-7.2-16-16-16H176c-8.8 0-16 7.2-16 16v16c0 8.8 7.2 16 16 16h56v48h-56L37.7 166.9a31.9 31.9 0 0 0 -5.8-.5C14.7 166.3 0 180.4 0 198.3v95c0 15.5 11.1 28.7 26.3 31.5L96 337.5V384c0 17.7 14.3 32 32 32h274.6c8.6 0 16.8-3.4 22.8-9.5l212.3-214.8c1.5-1.5 2.3-3.5 2.3-5.7V168c0-5.3-5.1-9.2-10.2-7.7zM96 288.7l-48-8.7v-62.4l48 8.7v62.4zm453.3 84.7c0 23.6 19.1 42.7 42.7 42.7s42.7-19.1 42.7-42.7S592 288 592 288s-42.7 61.8-42.7 85.3z"/></svg>
+              <!--!Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path d="M416 192c0-88.4-93.1-160-208-160S0 103.6 0 192c0 34.3 14.1 65.9 38 92-13.4 30.2-35.5 54.2-35.8 54.5-2.2 2.3-2.8 5.7-1.5 8.7S4.8 352 8 352c36.6 0 66.9-12.3 88.7-25 32.2 15.7 70.3 25 111.3 25 114.9 0 208-71.6 208-160zm122 220c23.9-26 38-57.7 38-92 0-66.9-53.5-124.2-129.3-148.1 .9 6.6 1.3 13.3 1.3 20.1 0 105.9-107.7 192-240 192-10.8 0-21.3-.8-31.7-1.9C207.8 439.6 281.8 480 368 480c41 0 79.1-9.2 111.3-25 21.8 12.7 52.1 25 88.7 25 3.2 0 6.1-1.9 7.3-4.8 1.3-2.9 .7-6.3-1.5-8.7-.3-.3-22.4-24.2-35.8-54.5z"/></svg>
             </div>
-            <span class="nav-link-text ms-1">Oil fields</span>
-          </a>
-        </li>
-       
-        <li class="nav-item">
-          {{#if (compare activeSideBar "customer")}}
-          <a class="nav-link active" href="/customer">
-          {{else}}
-          <a class="nav-link" href="/customer">
-          {{/if}}
-            <div
-              class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
-              {{#if (compare activeSideBar "customer")}}
-              <svg style="color: aliceblue;" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
-              {{else}}
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
-              {{/if}}
-              <!--!Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path d="M224 256c70.7 0 128-57.3 128-128S294.7 0 224 0 96 57.3 96 128s57.3 128 128 128zm95.8 32.6L272 480l-32-136 32-56h-96l32 56-32 136-47.8-191.4C56.9 292 0 350.3 0 422.4V464c0 26.5 21.5 48 48 48h352c26.5 0 48-21.5 48-48v-41.6c0-72.1-56.9-130.4-128.2-133.8z"/></svg>
-            </div>
-            <span class="nav-link-text ms-1">Client</span>
+            <span class="nav-link-text ms-1">ChatBox Test</span>
           </a>
         </li>
         <li class="nav-item">
-          {{#if (compare activeSideBar "service")}}
-          <a class="nav-link active" href="/service">
+          {{#if (compare activeSideBar "banner")}}
+          <a class="nav-link active" href="/banner">
           {{else}}
-          <a class="nav-link" href="/service">
+          <a class="nav-link" href="/banner">
           {{/if}}
             <div
               class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
-              {{#if (compare activeSideBar "service")}}
-              <svg style="color: aliceblue;" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 352 512">
+              {{#if (compare activeSideBar "banner")}}
+              <svg  style="color: aliceblue;" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512">
               {{else}}
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 352 512">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512">
               {{/if}}
-              <!--!Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path d="M205.2 22.1c-7.9-28.8-49.4-30.1-58.4 0C100 179.9 0 222.7 0 333.9 0 432.4 78.7 512 176 512s176-79.7 176-178.1c0-111.8-99.8-153.3-146.8-311.8zM176 448c-61.8 0-112-50.3-112-112 0-8.8 7.2-16 16-16s16 7.2 16 16c0 44.1 35.9 80 80 80 8.8 0 16 7.2 16 16s-7.2 16-16 16z"/></svg>
+              <!--!Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path d="M480 416v16c0 26.5-21.5 48-48 48H48c-26.5 0-48-21.5-48-48V176c0-26.5 21.5-48 48-48h16v208c0 44.1 35.9 80 80 80h336zm96-80V80c0-26.5-21.5-48-48-48H144c-26.5 0-48 21.5-48 48v256c0 26.5 21.5 48 48 48h384c26.5 0 48-21.5 48-48zM256 128c0 26.5-21.5 48-48 48s-48-21.5-48-48 21.5-48 48-48 48 21.5 48 48zm-96 144l55.5-55.5c4.7-4.7 12.3-4.7 17 0L272 256l135.5-135.5c4.7-4.7 12.3-4.7 17 0L512 208v112H160v-48z"/></svg>
             </div>
-            <span class="nav-link-text ms-1">Service</span>
+            <span class="nav-link-text ms-1">Banner</span>
           </a>
         </li>
         
         <li class="nav-item">
-          {{#if (compare activeSideBar "icon")}}
-          <a class="nav-link active" href="/icon">
+          {{#if (compare activeSideBar "file")}}
+          <a class="nav-link active" href="/file">
           {{else}}
-          <a class="nav-link" href="/icon">
+          <a class="nav-link" href="/file">
           {{/if}}
             <div
               class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
-              {{#if (compare activeSideBar "icon")}}
-              <svg style="color: aliceblue;" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512">
+              {{#if (compare activeSideBar "file")}}
+              <svg  style="color: aliceblue;" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512">
               {{else}}
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512">
               {{/if}}
-              <!--!Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path d="M160 32c-35.3 0-64 28.7-64 64V320c0 35.3 28.7 64 64 64H512c35.3 0 64-28.7 64-64V96c0-35.3-28.7-64-64-64H160zM396 138.7l96 144c4.9 7.4 5.4 16.8 1.2 24.6S480.9 320 472 320H328 280 200c-9.2 0-17.6-5.3-21.6-13.6s-2.9-18.2 2.9-25.4l64-80c4.6-5.7 11.4-9 18.7-9s14.2 3.3 18.7 9l17.3 21.6 56-84C360.5 132 368 128 376 128s15.5 4 20 10.7zM192 128a32 32 0 1 1 64 0 32 32 0 1 1 -64 0zM48 120c0-13.3-10.7-24-24-24S0 106.7 0 120V344c0 75.1 60.9 136 136 136H456c13.3 0 24-10.7 24-24s-10.7-24-24-24H136c-48.6 0-88-39.4-88-88V120z"/></svg>
+              <!--!Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path d="M480 416v16c0 26.5-21.5 48-48 48H48c-26.5 0-48-21.5-48-48V176c0-26.5 21.5-48 48-48h16v208c0 44.1 35.9 80 80 80h336zm96-80V80c0-26.5-21.5-48-48-48H144c-26.5 0-48 21.5-48 48v256c0 26.5 21.5 48 48 48h384c26.5 0 48-21.5 48-48zM256 128c0 26.5-21.5 48-48 48s-48-21.5-48-48 21.5-48 48-48 48 21.5 48 48zm-96 144l55.5-55.5c4.7-4.7 12.3-4.7 17 0L272 256l135.5-135.5c4.7-4.7 12.3-4.7 17 0L512 208v112H160v-48z"/></svg>
             </div>
-            <span class="nav-link-text ms-1">Icons</span>
+            <span class="nav-link-text ms-1">Files</span>
           </a>
         </li>
-        <li class="nav-item">
-          {{#if (compare activeSideBar "project")}}
-          <a class="nav-link active" href="/project">
-          {{else}}
-          <a class="nav-link" href="/project">
-          {{/if}}
-            <div
-              class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
-              {{#if (compare activeSideBar "project")}}
-              <svg style="color: aliceblue;" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512">
-              {{else}}
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512">
-              {{/if}}
-              <!--!Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path d="M264.5 5.2c14.9-6.9 32.1-6.9 47 0l218.6 101c8.5 3.9 13.9 12.4 13.9 21.8s-5.4 17.9-13.9 21.8l-218.6 101c-14.9 6.9-32.1 6.9-47 0L45.9 149.8C37.4 145.8 32 137.3 32 128s5.4-17.9 13.9-21.8L264.5 5.2zM476.9 209.6l53.2 24.6c8.5 3.9 13.9 12.4 13.9 21.8s-5.4 17.9-13.9 21.8l-218.6 101c-14.9 6.9-32.1 6.9-47 0L45.9 277.8C37.4 273.8 32 265.3 32 256s5.4-17.9 13.9-21.8l53.2-24.6 152 70.2c23.4 10.8 50.4 10.8 73.8 0l152-70.2zm-152 198.2l152-70.2 53.2 24.6c8.5 3.9 13.9 12.4 13.9 21.8s-5.4 17.9-13.9 21.8l-218.6 101c-14.9 6.9-32.1 6.9-47 0L45.9 405.8C37.4 401.8 32 393.3 32 384s5.4-17.9 13.9-21.8l53.2-24.6 152 70.2c23.4 10.8 50.4 10.8 73.8 0z"/></svg>
-            </div>
-            <span class="nav-link-text ms-1">Projects</span>
-          </a>
-        </li>
+        
+
         <li class="nav-item mt-3">
           <h6 class="ps-4 ms-2 text-uppercase text-xs font-weight-bolder opacity-6">Account pages</h6>
         </li>
@@ -224,11 +195,11 @@
             <span class="nav-link-text ms-1">Profile</span>
           </a>
         </li>
-        <li class="nav-item mt-3">
+        {{!-- <li class="nav-item mt-3">
           <h6 class="ps-4 ms-2 text-uppercase text-xs font-weight-bolder opacity-6">Setting pages</h6>
-        </li>
+        </li> --}}
        
-        <li class="nav-item">
+        {{!-- <li class="nav-item">
           {{#if (compare activeSideBar "general")}}
           <a class="nav-link active" href="/setting/general">
           {{else}}
@@ -245,7 +216,7 @@
             </div>
             <span class="nav-link-text ms-1">General</span>
           </a>
-        </li>
+        </li> --}}
       </ul>
     </div>
   </aside>

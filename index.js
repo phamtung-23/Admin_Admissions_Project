@@ -2,32 +2,37 @@ import express from 'express'
 import dotenv from 'dotenv'
 import path from 'path'
 import { fileURLToPath } from 'url';
+import cors from 'cors'
 
 import {connect} from './connectDb.js'
 import cookieParser from 'cookie-parser'
+
 import authRoute from './routes/auth.js'
 import usersRoute from './routes/users.js'
-import oilfieldRoute from './routes/oilField.js'
-import projectRoute from './routes/project.js'
+import universityRoute from './routes/university.js'
+import bannerRoute from './routes/banner.js'
+import messagesRoute from './routes/messages.js'
+import messagesPdfRoute from './routes/messagesPdf.js'
+import flowiseApi from './routes/flowise.js'
 
 import beUsersRoute from './routes/admin/users.js'
 import siteRoute from './routes/admin/site.js'
-import beOilfieldRoute from './routes/admin/oilField.js'
-import beCustomer from './routes/admin/customer.js'
-import beService from './routes/admin/service.js'
-import beIcon from './routes/admin/icon.js'
-import beProject from './routes/admin/project.js'
 import beSetting from './routes/admin/setting.js'
 import beUniversity from './routes/admin/university.js'
+import beChat from './routes/admin/chat.js'
+import beBanner from './routes/admin/banner.js'
+import beFile from './routes/admin/file.js'
 
 import handlebars from 'express-handlebars'
 
 const app = express()
 
+
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 dotenv.config()
 
+app.use(cors());
 app.use(cookieParser())
 app.use(express.urlencoded({
   extended: true,
@@ -65,18 +70,25 @@ app.set('views', path.join(__dirname, 'resources/views'))
 app.use('/',siteRoute)
 app.use('/users',beUsersRoute)
 app.use('/university',beUniversity)
-app.use('/fields',beOilfieldRoute)
-app.use('/customer',beCustomer)
-app.use('/service',beService)
-app.use('/icon',beIcon)
-app.use('/project',beProject)
+app.use('/chat',beChat)
+app.use('/banner',beBanner)
+app.use('/file',beFile)
+
 app.use('/setting',beSetting)
 
 // router for api
 app.use('/api/auth',authRoute)
 app.use('/api/users',usersRoute)
-app.use('/api/fields',oilfieldRoute)
-app.use('/api/project',projectRoute)
+app.use('/api/university',universityRoute)
+app.use('/api/banner',bannerRoute)
+app.use('/api/messages',messagesRoute)
+app.use('/api/messagesPdf',messagesPdfRoute)
+
+// api Flowise
+app.use("/api/flowise", flowiseApi)
+
+
+
 
 
 // handle error
