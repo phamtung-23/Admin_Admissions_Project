@@ -84,7 +84,10 @@ export const handleChatPDFWithPinecone =  async (req, res, next) => {
   }
   
   query({"question": prompt}).then((response) => {
-    res.status(200).json({message: response})
+    res.status(200).json({message: {
+      role: "assistant",
+      content: response.text
+    }})
   });
   
 

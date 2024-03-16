@@ -1,4 +1,5 @@
 import University from "../models/University.js";
+import { convertTextSearch } from "../utils/convertFileName.js";
 import {
   mongooseToObject
 } from "../utils/mongooses.js";
@@ -25,7 +26,7 @@ export const getAllUniversity = async (req, res, next) => {
     }else{
       if(q){
         universityAll = await University.find({ $or:[
-          {'name.vi': { $regex: q, $options: 'i' }},
+          {'searchName': { $regex: convertTextSearch(q), $options: 'i' }},
           {'code': { $regex: q, $options: 'i' }},
         ]});
       }else{
@@ -34,7 +35,7 @@ export const getAllUniversity = async (req, res, next) => {
     }
 
     const localizedUniversity = universityAll.map(item => {
-      const { _id, createdAt, updatedAt, name, code, type, trainingSystem, address, phone, email, website, facebook, imgCover, imgGallery, __v } = item.toObject();
+      const { _id, createdAt, updatedAt, name, code, type, trainingSystem, address, phone, email, website, facebook, imgCover, imgGallery, icon, __v } = item.toObject();
 
       const listImgGallery = imgGallery.map((img)=>{
         return  getFullUrlImg(req, img)
@@ -51,6 +52,7 @@ export const getAllUniversity = async (req, res, next) => {
         email, 
         website, 
         facebook,
+        icon: getFullUrlImg(req, icon),
         imgCover: getFullUrlImg(req, imgCover),
         imgGallery:listImgGallery 
       };
@@ -98,6 +100,7 @@ export const getDetailUniversity = async (req, res, next) => {
       facebook,
       imgGallery,
       infoAdmission,
+      icon,
       ...rest
     } = currentUniversity.toObject();
 
@@ -105,6 +108,7 @@ export const getDetailUniversity = async (req, res, next) => {
       nameVi: name.vi,
       nameEn: name.en,
       imgCover: getFullUrlImg(req, imgCover),
+      icon: getFullUrlImg(req, icon),
       code,
       type,
       trainingSystem,
@@ -114,7 +118,7 @@ export const getDetailUniversity = async (req, res, next) => {
       website,
       facebook,
       imgGallery: imgGallery.map((img)=>{return getFullUrlImg(req, img)}),
-      infoAdmission,
+      infoAdmission: getFullUrlImg(req, infoAdmission)
     }
 
     return res.status(200).json(result);

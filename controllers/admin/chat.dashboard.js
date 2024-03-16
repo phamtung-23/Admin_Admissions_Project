@@ -3,7 +3,7 @@ import { mongooseToObject } from '../../utils/mongooses.js';
 import OpenAI from "openai";
 
 
-const openai = new OpenAI({apiKey: "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"});
+const openai = new OpenAI({apiKey: process.env.OPENAI_API_KEY});
 
 
 async function chatGPTStream(prompt) {

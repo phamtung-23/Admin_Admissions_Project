@@ -18,6 +18,6 @@ const router = express.Router();
 
 // get api chat
 router.post('/', upload.array('files', 12), handleChatAI)
-router.post('/pdf',upload.any(), handleChatPDFWithPinecone)
+router.post('/pdf', handleChatPDFWithPinecone)
 
 export default router

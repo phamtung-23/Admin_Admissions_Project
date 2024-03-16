@@ -3,6 +3,10 @@ const { Schema } = mongoose;
 
 
 const UniversitySchema = new mongoose.Schema({
+  searchName: {
+    type: String,
+    required: true
+  },
   name: {
     vi: {
       type: String,

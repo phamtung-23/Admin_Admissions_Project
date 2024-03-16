@@ -2,6 +2,7 @@ import { mongooseToObject, mutipleMongooseTonObject } from '../../utils/mongoose
 import User from '../../models/User.js';
 import { createError } from '../../utils/error.js';
 import University from '../../models/University.js';
+import { convertTextSearch } from '../../utils/convertFileName.js';
 
 
 
@@ -106,6 +107,7 @@ export const handleCreateUniversity = async (req, res, next) => {
     
     const newUniversity = new University({
       ...req.body,
+      searchName: convertTextSearch(nameVi),
       name:{
         vi: nameVi,
         en: nameEn
@@ -227,6 +229,7 @@ export const handleUpdateUniversity = async (req, res, next) => {
 
     const updateUniversity = {
       ...req.body,
+      searchName: convertTextSearch(nameVi),
       name:{
         vi: nameVi,
         en: nameEn
