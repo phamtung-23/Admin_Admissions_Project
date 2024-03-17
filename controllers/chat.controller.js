@@ -24,7 +24,7 @@ const __dirname = path.dirname(__filename);
 dotenv.config()
 
 
-async function mergePDFs(inputFolder, outputPath) {
+export async function mergePDFs(inputFolder, outputPath) {
   const mergedPdf = await PDFDocument.create();
 
   const files = fs.readdirSync(inputFolder);

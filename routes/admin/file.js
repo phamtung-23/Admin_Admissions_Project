@@ -2,7 +2,7 @@ import express from 'express';
 
 
 import { verifyDashboard, verifyDashboardManager } from '../../utils/verifyToken.js';
-import {  getAddPdf, getHandleGetPdf, handleFilePdf } from '../../controllers/admin/file.dashboard.js';
+import {  downloadFilePdfAll, getAddPdf, getHandleGetPdf, handleFilePdf } from '../../controllers/admin/file.dashboard.js';
 import multer from 'multer';
 import { convertFilename } from '../../utils/convertFileName.js';
 
@@ -24,6 +24,7 @@ router.delete('/:id', verifyDashboardManager, handleFilePdf);
 
 // router.get('/:id/edit', verifyDashboardManager, getEditLegendItem); 
 router.get('/create', verifyDashboardManager, getAddPdf); 
+router.get('/download', verifyDashboardManager, downloadFilePdfAll); 
 router.get('/', verifyDashboardManager, getHandleGetPdf); 
 
 export default router

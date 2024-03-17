@@ -3,6 +3,7 @@ import User from '../../models/User.js';
 import { convertFilename, convertTextSearch } from '../../utils/convertFileName.js';
 import University from '../../models/University.js';
 import {PythonShell} from  "python-shell";
+import { mergePDFs } from '../chat.controller.js';
 
 
 
@@ -74,3 +75,14 @@ export const handleFilePdf = async (req, res, next) => {
     next(error);
   }
 }
+export const downloadFilePdfAll = async (req, res, next) => {
+  try {
+    const inputFolder = 'outputPDF'; // Folder containing input PDF files
+    const outputPath = 'outputPDF/all.pdf';
+    await mergePDFs(inputFolder, outputPath)
+    res.download('outputPDF/all.pdf')
+  } catch (error) {
+    next(error);
+  }
+}
+

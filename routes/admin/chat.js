@@ -12,6 +12,7 @@ const router = express.Router();
 
 router.post('/gpt', handleChatGPT);
 router.post('/pdf', chatPdfOpenAi);
+
 // router.post('/pdf', chatPdfOpenAiPineCone);
 router.post('/injectPdf', inject_docs);
 // router.post('/injectPdf', inject_Pinecone);
